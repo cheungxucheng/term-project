@@ -1,112 +1,69 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #f8f8f8;
 }
 
 header {
-    background-color: #333;
+    background: #333;
     color: white;
-    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.logo{
-    font-size: 40px;
-    font-weight: bold;
-}
-
-nav{
-    display: flex;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-header nav a {
+a {
     color: white;
-    margin-left: 20px;
     text-decoration: none;
 }
 
-.searchbar {
-    border: solid grey 1px;
-    border-radius: 1px;
+.logo {
+    font-size: 24px;
+    font-weight: bold;
 }
 
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
+.search-bar input {
+    padding: 8px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.search {
+.user-actions {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
+    gap: 20px;
 }
 
-.search-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 400px;
-    margin: auto;
-}
-
-.search-box {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    border: 2px solid #ccc;
-    border-radius: 25px;
-    overflow: hidden;
-    background-color: white;
-}
-
-.search-box input {
-    flex: 1;
-    padding: 10px 15px;
-    border: none;
-    outline: none;
-    font-size: 16px;
-}
-
-.search-box button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
+.cart-icon {
+    font-size: 20px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
 }
 
-.search-box button:hover {
-    background-color: #0056b3;
+main {
+    flex: 1;
+    padding: 30px;
 }
 
-h1{
+h1 {
     display: flex;
     justify-content: center;
     color: #333;
 }
 
-.aboutCards{
+.aboutCards {
     text-align: center;
     justify-content: space-between;
     display: flex;
     height: 100%;
 }
 
-.OurVision{
+.OurVision {
     display: block;
     margin: 0 auto;
     border-radius: 10px;
@@ -114,7 +71,7 @@ h1{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.HowItWorks{
+.HowItWorks {
     display: block;
     margin: 0 auto;
     border-radius: 10px;
@@ -122,7 +79,7 @@ h1{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.ShoppingMadeEasy{
+.ShoppingMadeEasy {
     display: block;
     margin: 0 auto;
     border-radius: 10px;
@@ -130,7 +87,7 @@ h1{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.ShopSecurely{
+.ShopSecurely {
     display: block;
     margin: 0 auto;
     border-radius: 10px;
@@ -138,12 +95,11 @@ h1{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.wrapper {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.content {
-    flex: 1;
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    border-top: 1px solid #e0e0e0;
 }
