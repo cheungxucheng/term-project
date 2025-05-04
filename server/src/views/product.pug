@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title= product.name + ' | CreatureCo'
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/css/product.css")
+  body
+    header
+      .logo 
+        a(href="/storefront") CreatureCo
+      .search-bar
+        input(type="text", placeholder="Search products...")
+      .user-actions 
+        a(href="#") Login/Register
+        a(href="#") Home
+        a(href="#") Shop
+        a(href="#") About
+        a(href="#") Contact
+        .cart-icon 🛒
+
+    main
+      .product-detail
+        img(src=product.imageUrl, alt="Image of " + product.name)
+        .info
+          h1= product.name
+          p.price $#{product.price}
+          p.description= product.description
+          button(type="button") Add to Cart
+          a.back-link(href="/storefront") ← Back to Shop
+
+    footer
+      | © 2025 CreatureCo. All rights reserved.
