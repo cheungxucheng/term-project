@@ -10,11 +10,12 @@ require('dotenv').config();
 require('./routes/auth/auth')(app);
 //require('./routes/user/user')(app);
 //require('./routes/todos/todos')(app);
-const storefrontRoutes = require('./routes/storefront/storefront')
+const storefrontRoutes = require('./routes/storefront/storefront');
+const productRoutes = require('./routes/product/product');
 const port = process.env.PORT
 
 app.use('/storefront', storefrontRoutes);
-
+app.use('/product', productRoutes);
 app.listen(port , () => {
     console.log(`API at http://localhost:${port}`);
 });
