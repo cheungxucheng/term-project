@@ -4,11 +4,12 @@ html
     meta(charset="utf-8")
     title CreatureCo
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel="stylesheet", href="/storefront/storefront.css")
+    link(rel="stylesheet", href="/css/storefront.css")
 
   body
     header
-      .logo CreatureCo
+      .logo 
+        a(href="/storefront") CreatureCo
       .search-bar
         input(type="text", placeholder="Search products...")
       .user-actions 
@@ -24,10 +25,12 @@ html
       h2 Latest Products:
       .product-grid
         each val, key in products
-          .product 
-            img(src="/images/tempimg.jpg" alt="Image of Product") 
-            .product-name= val.name 
-            .product-price= '$' + val.price
-            .product-desc= val.description
+          .product-box 
+            a(href=`/product/${val.id}`)
+              .product 
+                img(src=val.imageUrl alt="Image of Product") 
+                .product-name= val.name 
+                .product-price= '$' + val.price
+                .product-desc= val.description
     footer
       | © 2025 CreatureCo. All rights reserved.
