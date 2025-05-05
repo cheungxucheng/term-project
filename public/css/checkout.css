@@ -18,6 +18,11 @@ header {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+img {
+    height: 100px;
+    width: 100px;
+}
+
 a {
     color: white;
     text-decoration: none;
@@ -49,7 +54,8 @@ a {
 
 /* Main Content */
 main {
-    padding: 40px 20px;
+    flex: 1;
+    padding: 30px;
     display: flex;
     flex-direction: row;
     /* align-items:center; */
@@ -100,11 +106,31 @@ main {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+}
+
+.purchase-container h1 {
+    margin: 10px;
+}
+
+.cart-list {
+    text-align: right;
+    margin-right: 16px;
+}
+
+.total {
+    padding-top: 10px;
+    border-top: 0.2px solid rgba(128, 128, 128, 0.315);
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: end;
+    font-size: 20px;
 }
 
 /* Button */
 button {
-    padding: 10px 25px;
+    padding: 25px 25px;
+    margin: 10px;
     font-size: 16px;
     border: none;
     background-color: #007bff;

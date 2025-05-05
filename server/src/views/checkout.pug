@@ -20,15 +20,20 @@ html
 
     main 
         .cart-container
-            -for (let i = 1; i < 3; i++)
+            -for (let i = 0; i < 3; i++)
                 .cart-item 
+                    img(src=products[i].imageUrl alt=`Image of ${products[i].name}`)
                     .product-name= products[i].name 
-                    .product-price= '$' + products[i].price
+                    .product-price= "$" + products[i].price
                     .product-desc= products[i].description
         .purchase-container 
-            h2 The products in your cart are: 
-            -for (let i = 1; i < 3; i++) 
-                .cart-item= products[i].name 
+            h1 The products in your cart are: 
+            -var subTotal = 0
+            -for (let i = 0; i < 3; i++) 
+                .cart-list= products[i].name
+                -subTotal = subTotal + products[i].price
+            .total
+                strong= "$" + subTotal + ".00"                
             button(type="button") Check Out
 
 
