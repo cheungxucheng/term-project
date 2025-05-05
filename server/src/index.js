@@ -12,10 +12,13 @@ require('./routes/auth/auth')(app);
 //require('./routes/todos/todos')(app);
 const storefrontRoutes = require('./routes/storefront/storefront');
 const productRoutes = require('./routes/product/product');
+const checkoutRoutes = require('./routes/checkout/checkout');
 const port = process.env.PORT
 
+app.use('/checkout', checkoutRoutes);
 app.use('/storefront', storefrontRoutes);
 app.use('/product', productRoutes);
+
 app.listen(port , () => {
     console.log(`API at http://localhost:${port}`);
 });
