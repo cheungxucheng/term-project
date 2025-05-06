@@ -1,0 +1,41 @@
+html
+  head
+    meta(charset="utf-8")
+    title My Cart
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/css/checkout.css")
+  body
+    header
+      .logo 
+        a(href="/storefront") CreatureCo
+      .search-bar
+        input(type="text", placeholder="Search products...")
+      .user-actions 
+        a(href="#") Login/Register
+        a(href="#") Home
+        a(href="#") Shop
+        a(href="#") About
+        a(href="#") Contact
+        .cart-icon 🛒
+
+    main 
+        .cart-container
+            -for (let i = 0; i < 3; i++)
+                .cart-item 
+                    img(src=products[i].imageUrl alt=`Image of ${products[i].name}`)
+                    .product-name= products[i].name 
+                    .product-price= "$" + products[i].price
+                    .product-desc= products[i].description
+        .purchase-container 
+            h1 The products in your cart are: 
+            -var subTotal = 0
+            -for (let i = 0; i < 3; i++) 
+                .cart-list= products[i].name
+                -subTotal = subTotal + products[i].price
+            .total
+                strong= "$" + subTotal + ".00"                
+            button(type="button") Check Out
+
+
+    footer
+      | © 2025 CreatureCo. All rights reserved.
