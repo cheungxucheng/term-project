@@ -22,16 +22,50 @@
 
     <main>
         <div class="login-wrapper">
-            <form class="login-form">
+            <form class="login-form" id="loginForm">
                 <h2>Login</h2>
-                <input type="text" placeholder="Username" required>
-                <input type="password" placeholder="Password" required>
+                <input id="email" type="text" placeholder="Email" required>
+                <input id="password" type="password" placeholder="Password" required>
                 <div class="checkbox">
                     <input type="checkbox" id="rememberme" />
                     <label for="rememberme">Stay Signed In?</label>
                 </div>
                 <button type="submit">Login</button>
             </form>
+
+            <script>
+                document.getElementById('loginForm').addEventListener('submit', async function(event) {
+                    event.preventDefault(); // Empêche le rechargement de la page
+        
+                    const form = event.target;
+                    const data = {
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value,
+                    };
+        
+                    try {
+                        const response = await fetch('/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Échec de l’inscription');
+                        }
+        
+                        const result = await response.json();
+                        localStorage.setItem('authToken', result.token);
+        
+                        window.location.href = '/storefront';
+        
+                    } catch (error) {
+                        alert('Erreur : ' + error.message);
+                    }
+                });
+            </script>
         </div>
     </main>
 </body>

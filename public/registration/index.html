@@ -22,16 +22,57 @@
 
     <main>
         <div class="registration-wrapper">
-            <form class="registration-form">
+            <form class="registration-form" method="POST" id="registrationForm">
                 <h2>Make an Account</h2>
-                <label>Email: </label>
-                <input type="email" placeholder="" required>
-                <label>First Name: </label>
-                <input type="first-name" placeholder="" required>
-                <label>Password: </label>
-                <input type="password" placeholder="" required>
+                <label for="email">Email: </label>
+                <input id="email" name="email" type="email" placeholder="" required>
+
+                <label for="firstname">First Name: </label>
+                <input id="firstname" name="firstname" type="first-name" placeholder="" required>
+
+                <label for="lastname">Last Name: </label>
+                <input id="lastname" name="lastname" type="last-name" placeholder="" required>
+
+                <label for="password">Password: </label>
+                <input id="password" name="password" type="password" placeholder="" required>
+
                 <button type="submit">Register</button>
             </form>
+            <script>
+                document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+                    event.preventDefault(); // Empêche le rechargement de la page
+        
+                    const form = event.target;
+                    const data = {
+                        email: document.getElementById('email').value,
+                        firstname: document.getElementById('firstname').value,
+                        lastname: document.getElementById('lastname').value,
+                        password: document.getElementById('password').value,
+                    };
+        
+                    try {
+                        const response = await fetch('/registration', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Échec de l’inscription');
+                        }
+        
+                        const result = await response.json();
+                        localStorage.setItem('authToken', result.token);
+        
+                        window.location.href = '/storefront';
+        
+                    } catch (error) {
+                        alert('Erreur : ' + error.message);
+                    }
+                });
+            </script>
         </div>
     </main>
 </body>
