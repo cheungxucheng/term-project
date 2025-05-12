@@ -12,7 +12,7 @@ html
       .search-bar
         input(type="text", placeholder="Search products...")
       .user-actions 
-        a(href="/") Login/Register
+        a(href="/" id="auth-link") Login/Register
         a(href="/storefront") Home
         a(href="#") Shop
         a(href="/about") About
@@ -20,7 +20,7 @@ html
         .cart-icon 
           a(href="/checkout") 🛒
     .welcome 
-      h1 Welcome back, User!
+      h1(id="welcome") Welcome, Guest!
     main
       h2 Latest Products:
       .product-grid
@@ -30,7 +30,20 @@ html
               .product 
                 img(src=val.imageUrl alt="Image of Product") 
                 .product-name= val.name 
-                .product-price= '$' + val.price
+                .product-price= "$" + val.price
                 .product-desc= val.description
     footer
       | © 2025 CreatureCo. All rights reserved.
+    script. 
+      document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+          const nav = document.getElementById("auth-link");
+          const welcomeEl = document.getElementById("welcome");
+          const user = JSON.parse(atob(token.split(".")[1]));
+
+          welcomeEl.textContent = `Welcome back, ${user.dbres2.firstname}!`;
+          nav.textContent = "My Profile";
+          nav.href = "/profile";
+        }        
+      });
