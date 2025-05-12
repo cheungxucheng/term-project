@@ -11,7 +11,7 @@ html
       .search-bar
         input(type="text", placeholder="Search products...")
       .user-actions 
-        a(href="/") Login/Register
+        a(href="/" id="auth-link") Login/Register
         a(href="/storefront") Home
         a(href="#") Shop
         a(href="/about") About
@@ -40,3 +40,12 @@ html
 
     footer
       | © 2025 CreatureCo. All rights reserved.
+    script. 
+      document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+          const nav = document.getElementById("auth-link");
+          nav.textContent = "My Profile";
+          nav.href = "/profile";
+        }        
+      });
