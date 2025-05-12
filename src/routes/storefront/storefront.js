@@ -1,8 +1,7 @@
 const express = require('express');
 const db = require('../../config/db');
 const router = express.Router();
-const { getProducts } = require('./../../config/db.prepare')
-const auth = require('../../middleware/auth')
+//const auth = require('../../middleware/auth')
 
 router.get('/', (req, res) => {
     db.serialize(() => {
