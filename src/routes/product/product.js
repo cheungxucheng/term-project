@@ -7,18 +7,13 @@ const auth = require('../../middleware/auth');
 router.get('/:id', (req, res) => {
     const productId = parseInt(req.params.id);
     db.serialize(() => {
-        db.get('SELECT * FROM Products WHERE id = ?', productId, (err, product) => {
+        db.get('SELECT * FROM Products WHERE id = ?', [productId], (err, product) => {
             if (err) {
-                console.error('Error fetching product:', err.message);
+                console.error('Error fetching product with id:', err.message);
                 return res.status(500).json({ error: 'Internal Server Error' });
             }
-            else if (!product) {
-                        return res.status(404).send('Product not found');
-            }
-            else {
-                res.render('product', { product });
-            }
-        })
+            res.render('product', { product });
+        });
     })
 });
 
