@@ -110,3 +110,11 @@ main {
 .login-form button:hover {
     background-color: #0056b3;
 }
+
+.registration-link {
+    padding-top: 10px;
+}
+
+.login-wrapper a {
+    color:#007BFF;
+}
