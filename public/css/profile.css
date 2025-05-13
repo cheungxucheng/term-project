@@ -30,6 +30,13 @@ a {
     text-decoration: none;
 }
 
+.search-bar input {
+    padding: 8px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 .logo {
     font-size: 24px;
     font-weight: bold;
