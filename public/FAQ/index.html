@@ -11,17 +11,21 @@
 <body>
 
     <header>
-        <div class="logo">CreatureCo</div>
+        <div class="logo">
+            <a href="/storefront">CreatureCo</a> 
+        </div>
         <div class="search-bar">
             <input type="text" placeholder="Search products...">
         </div>
         <div class="user-actions">
-            <div><a href="#">Login/Register</a></div>
-            <a href="#">Home</a>
+            <div><a href="/" id="auth-link">Login/Register</a></div>
+            <a href="/storefront">Home</a>
             <a href="#">Shop</a>
-            <a href="#">About</a>
+            <a href="/about">About</a>
             <a href="#">Contact</a>
-            <div class="cart-icon">🛒</div>
+            <div class="cart-icon">
+                <a href="/checkout">🛒</a>
+            </div>
         </div>
     </header>
 
@@ -193,6 +197,16 @@
     <footer>
         &copy; 2025 CreatureCo. All rights reserved.
     </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+          const nav = document.getElementById("auth-link");
+          nav.textContent = "My Profile";
+          nav.href = "/profile";
+        }        
+      });
+    </script>
 </body>
 
 </html>
