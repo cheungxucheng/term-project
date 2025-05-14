@@ -33,6 +33,14 @@ app.get('/registration', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'registration', 'index.html'));
 })
 
+app.get('/faq', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'FAQ', 'index.html'));
+})
+
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'About', 'index.html'));
+})
+
 app.listen(port , () => {
     console.log(`API at http://localhost:${port}`);
 });
