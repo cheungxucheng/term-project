@@ -26,9 +26,23 @@ module.exports = function(app) {
                         res.status(403);
                     }
                 } else {
-                    console.log(color_green, "POST requesr Success: register");
-                    const token = jsw.sign({email: req.body.email, password: req.body.password}, process.env.SECRET)
-                    res.status(200).json({ status: 'ok', token: token });
+                    db.get(`SELECT id FROM Users WHERE lastname = ? AND firstname = ? AND email = ?`, [lastname, firstname, email], (err, result) => {
+                        if (err) {
+                            console.error(color_red, "POST Error register: Email already exist");
+                            res.status(500).json({ status: 'ko', result: 'Email already exist' });
+                        } else {
+                            db.run(`INSERT INTO carts (user_id, product_ids) VALUES (?, ?)`, [result.id, ""], (err) => {
+                                if (err) {
+                                    console.error(color_red, "POST Error register: Email already exist");
+                                    res.status(500).json({ status: 'ko', result: 'create carts' });
+                                } else {
+                                    console.log(color_green, "POST requesr Success: register");
+                                    const token = jsw.sign({id: result.id, email: req.body.email, password: req.body.password}, process.env.SECRET)
+                                    res.status(200).json({ status: 'ok', token: token });
+                                }
+                            })
+                        }
+                    })
                 }
             });
         })

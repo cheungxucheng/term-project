@@ -33,6 +33,15 @@ function initializeDatabase() {
                 description TEXT,
                 imageUrl TEXT
             )
+        `);
+
+        db.run(`
+            CREATE TABLE IF NOT EXISTS carts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INT UNIQUE NOT NULL,
+                product_ids TEXT,
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            )
         `, () => {
             //insertDefaultProducts();
         });

@@ -20,32 +20,74 @@ html
           a(href="/checkout") 🛒
 
     main 
-        .cart-container
-            -for (let i = 0; i < 3; i++)
-                .cart-item 
-                    img(src=products[i].imageUrl alt=`Image of ${products[i].name}`)
-                    .product-name= products[i].name 
-                    .product-price= "$" + products[i].price
-                    .product-desc= products[i].description
-        .purchase-container 
-            h1 The products in your cart are: 
-            -var subTotal = 0
-            -for (let i = 0; i < 3; i++) 
-                .cart-list= products[i].name
-                -subTotal = subTotal + products[i].price
-            .total
-                strong= "$" + subTotal + ".00"                
-            button(type="button") Check Out
+      .cart-container#cart-items
+        // Les produits seront insérés ici dynamiquement
 
+      .purchase-container
+        h1 The products in your cart are:
+        .cart-list-container#cart-list
+        .total
+          strong Total: 
+          span#cart-total $0.00
+        button(type="button") Check Out
 
     footer
       | © 2025 CreatureCo. All rights reserved.
     script. 
-      document.addEventListener("DOMContentLoaded", function () {
-        const token = localStorage.getItem("authToken");
-        if (token) {
-          const nav = document.getElementById("auth-link");
-          nav.textContent = "My Profile";
-          nav.href = "/profile";
-        }        
-      });
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem("authToken");
+            if (token) {
+                const nav = document.getElementById("auth-link");
+                nav.textContent = "My Profile";
+                nav.href = "/profile";
+            }        
+        });
+    script.
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem("authToken");
+            
+            if (token) {
+            const nav = document.getElementById("auth-link");
+            nav.textContent = "My Profile";
+            nav.href = "/profile";
+
+            fetch('/checkout/api', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                const cartItems = document.getElementById("cart-items");
+                const cartList = document.getElementById("cart-list");
+                const cartTotal = document.getElementById("cart-total");
+
+                let subTotal = 0;
+
+                data.products.forEach(product => {
+                    subTotal += product.price;
+
+                    // Section visuelle avec image + infos
+                    const item = document.createElement("div");
+                    item.classList.add("cart-item");
+                    item.innerHTML = `
+                    <img src="${product.imageUrl || '/images/default.png'}" alt="Image of ${product.name}">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">$${product.price.toFixed(2)}</div>
+                    <div class="product-desc">${product.description || ''}</div>
+                    `;
+                    cartItems.appendChild(item);
+
+                    // Ligne textuelle dans la liste
+                    const listItem = document.createElement("div");
+                    listItem.classList.add("cart-list");
+                    listItem.textContent = product.name;
+                    cartList.appendChild(listItem);
+                });
+
+                cartTotal.textContent = `$${subTotal.toFixed(2)}`;
+            })
+            .catch(err => console.error("Erreur lors de la récupération du panier :", err));
+            }
+        });

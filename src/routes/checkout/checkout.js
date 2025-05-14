@@ -1,96 +1,51 @@
 const express = require('express');
+const jsw = require('jsonwebtoken');
+require('dotenv').config();
 const router = express.Router();
-
-const products =
-    [
-        {
-            "id": 1,
-            "name": "Golden Retriever Puppy",
-            "price": 1200,
-            "description": "A playful and affectionate Golden Retriever pup ready for a loving home. Great with kids and other pets.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 2,
-            "name": "Siberian Husky",
-            "price": 1500,
-            "description": "Beautiful blue-eyed Husky with a thick coat and boundless energy. Ideal for active families and cold climates.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 3,
-            "name": "British Shorthair Kitten",
-            "price": 900,
-            "description": "Chubby-cheeked and calm, this kitten is perfect for indoor living. Known for its plush coat and friendly nature.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 4,
-            "name": "African Grey Parrot",
-            "price": 1300,
-            "description": "Highly intelligent and talkative, this parrot can mimic human speech. Needs regular stimulation and attention.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 5,
-            "name": "Mini Lop Rabbit",
-            "price": 80,
-            "description": "Soft, floppy-eared, and gentle, ideal for children. Loves to be handled and cuddled.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 6,
-            "name": "Bengal Cat",
-            "price": 1100,
-            "description": "Sleek and wild-looking with a leopard-like pattern. Energetic and playful with a love for climbing.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 7,
-            "name": "Bearded Dragon",
-            "price": 150,
-            "description": "Docile reptile perfect for beginner exotic pet owners. Thrives in a warm, well-maintained terrarium.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 8,
-            "name": "Macaw Parrot",
-            "price": 2000,
-            "description": "Vibrantly colored and charismatic with a strong personality. Requires experienced handling and socialization.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 9,
-            "name": "Persian Kitten",
-            "price": 1000,
-            "description": "Fluffy, quiet, and affectionate with a royal demeanor. Needs daily grooming for its luxurious coat.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 10,
-            "name": "Chihuahua Puppy",
-            "price": 700,
-            "description": "Small in size but big in attitude. A loyal companion that loves to be pampered.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 11,
-            "name": "Holland Lop Rabbit",
-            "price": 90,
-            "description": "Compact and sweet-natured with a charming lopped ear look. Easily litter-trained and loves gentle interaction.",
-            "imageUrl": "/images/tempimg.jpg"
-        },
-        {
-            "id": 12,
-            "name": "Cockatiel",
-            "price": 120,
-            "description": "Cheerful and friendly bird that whistles and mimics sounds. A great choice for first-time bird owners.",
-            "imageUrl": "/images/tempimg.jpg"
-        }
-    ];
+const db = require('../../config/db');
     
 router.get('/', (req, res) => {
-    res.render('checkout', { products });
+    res.render('checkout');
 });
+
+router.get('/api', (req, res) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return res.status(401).json({ error: 'Aucun token fourni' });
+    }
+  
+    const token = authHeader.split(' ')[1];
+
+    const decoded = jsw.verify(token, process.env.SECRET)
+    const user_id = decoded.dbres2.id;
+
+    db.get(`SELECT product_ids FROM carts WHERE user_id = ?`, [user_id], (err, result) => {
+        if (err) {
+            console.error('Error fetching products:', err.message);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            const cleaned = result.product_ids.slice(1, -1);
+            const list_products = cleaned.split(';');
+
+            function getProductById(id) {
+                return new Promise((resolve, reject) => {
+                    db.get('SELECT * FROM Products WHERE id = ?', [id], (err, row) => {
+                        if (err) return reject(err);
+                            resolve(row);
+                    });
+                });
+            }
+
+            Promise.all(list_products.map(getProductById))
+            .then(products => {
+                res.send({ products: products })
+            })
+            .catch(err => {
+                console.error("Erreur :", err.message);
+            });
+        }
+    })
+})
 
 module.exports = router;
