@@ -37,7 +37,12 @@ router.post('/addToCart', async (req, res) => {
                 console.error('Erreur UPDATE :', err3.message);
                 res.status(500).json({ error: 'Erreur get data from cart' });
             } else {
-                const new_list = res2.product_ids + ';' + productId;
+                let new_list;
+                if (res2.product_ids == '') {
+                    new_list = productId;
+                } else {
+                    new_list = res2.product_ids + ';' + productId
+                }
                 setProductToCart.run([new_list, user_id], (err3) => {
                     if (err3) {
                         console.error('Erreur UPDATE :', err3.message);

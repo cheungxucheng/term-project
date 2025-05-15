@@ -3,6 +3,7 @@ const jsw = require('jsonwebtoken');
 require('dotenv').config();
 const router = express.Router();
 const db = require('../../config/db');
+const { setProductToCart } = require('../../config/db.prepare')
     
 router.get('/', (req, res) => {
     res.render('checkout');
@@ -43,6 +44,47 @@ router.get('/api', (req, res) => {
                 })
                 .catch(err => {
                     console.error("Erreur :", err.message);
+                });
+            }
+        })
+    })
+})
+
+router.post('/api', (req, res) => {
+    const authHeader = req.headers.authorization;
+    const { product_id, index } = req.body
+
+    if (!authHeader) {
+      return res.status(401).json({ error: 'Aucun token fourni' });
+    }
+  
+    const token = authHeader.split(' ')[1];
+    const decoded = jsw.verify(token, process.env.SECRET)
+    const user_id = decoded.dbres2.id;
+
+    db.serialize(() => {
+        db.get(`SELECT product_ids FROM carts WHERE user_id = ?`, [user_id], (err, result) => {
+            if (err) {
+                console.error('Error fetching products:', err.message);
+                return res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                const list_products = result.product_ids.split(';');
+                let new_list = []
+                if (list_products[index] === product_id) {
+                    list_products.forEach((element, index2) => {
+                        if (index2 != index) {
+                            new_list.push(element)
+                        }
+                    });
+                }
+                const tmp = new_list.join(';')
+                setProductToCart.run([tmp, user_id], (err3) => {
+                    if (err3) {
+                        console.error('Erreur UPDATE :', err3.message);
+                        res.status(500).json({ error: 'Erreur mise à jour panier' });
+                    } else {
+                        res.status(200).json({ status: 'ok', message: 'Produit supprimer' });
+                    }
                 });
             }
         })

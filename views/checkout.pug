@@ -21,7 +21,6 @@ html
 
     main 
       .cart-container#cart-items
-        // Les produits seront insérés ici dynamiquement
 
       .purchase-container
         h1 The products in your cart are:
@@ -43,14 +42,7 @@ html
             }        
         });
     script.
-        document.addEventListener("DOMContentLoaded", function () {
-            const token = localStorage.getItem("authToken");
-            
-            if (token) {
-            const nav = document.getElementById("auth-link");
-            nav.textContent = "My Profile";
-            nav.href = "/profile";
-
+        function loadCart(token) {
             fetch('/checkout/api', {
                 method: 'GET',
                 headers: {
@@ -63,31 +55,84 @@ html
                 const cartList = document.getElementById("cart-list");
                 const cartTotal = document.getElementById("cart-total");
 
+                cartItems.innerHTML = "";
+                cartList.innerHTML = "";
+                cartTotal.textContent = "";
+
                 let subTotal = 0;
 
-                data.products.forEach(product => {
-                    subTotal += product.price;
+                console.log(data)
 
-                    // Section visuelle avec image + infos
+                if (data.products == '') {
                     const item = document.createElement("div");
                     item.classList.add("cart-item");
                     item.innerHTML = `
-                    <img src="${product.imageUrl || '/images/default.png'}" alt="Image of ${product.name}">
-                    <div class="product-name">${product.name}</div>
-                    <div class="product-price">$${product.price.toFixed(2)}</div>
-                    <div class="product-desc">${product.description || ''}</div>
+                    <p>No products in your carts</p>
                     `;
                     cartItems.appendChild(item);
 
-                    // Ligne textuelle dans la liste
                     const listItem = document.createElement("div");
                     listItem.classList.add("cart-list");
-                    listItem.textContent = product.name;
                     cartList.appendChild(listItem);
-                });
+                } else  {
+                    data.products.forEach((product, index) => {
+                        console.log(data.products)
+                        subTotal += product.price;
 
+                        const item = document.createElement("div");
+                        item.classList.add("cart-item");
+                        item.innerHTML = `
+                        <div class="container-img">
+                            <img src="${product.imageUrl || '/images/default.png'}" width="120" height="180" class="img-products" alt="Image of ${product.name}">
+                            <button onclick="popProduct('${product.id}', '${index}')"><img src="/images/trash.png" class="trash-icon" alt="Trash icon"></button>
+                        </div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <div class="product-desc">${product.description || ''}</div>
+                        `;
+                        cartItems.appendChild(item);
+
+                        const listItem = document.createElement("div");
+                        listItem.classList.add("cart-list");
+                        listItem.textContent = product.name;
+                        cartList.appendChild(listItem);
+                    });
+                }
                 cartTotal.textContent = `$${subTotal.toFixed(2)}`;
             })
             .catch(err => console.error("Erreur lors de la récupération du panier :", err));
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem("authToken");
+            if (token) {
+                const nav = document.getElementById("auth-link");
+                nav.textContent = "My Profile";
+                nav.href = "/profile";
+
+                loadCart(token)
             }
         });
+    script.
+        function popProduct(product_id, index) {
+            const token = localStorage.getItem("authToken");    
+            console.log("index: ", index)
+            console.log("product_id: ", product_id)
+
+            if (token) {
+
+                fetch('/checkout/api', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ product_id: product_id, index: index })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    loadCart(token)
+                    alert(data.message);
+                })
+                .catch(err => console.error("Erreur lors de la récupération du panier :", err));
+            }
+        }

@@ -68,16 +68,6 @@ html
                 })
                 .then(data => {
                     alert(data.message);
-                    /*
-                    fetch('/product/addToCart', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + token
-                        },
-                        body: JSON.stringify({ updCart: data.updCart })
-                    })
-                    */
                 })
                 .catch(err => {
                     console.error('Erreur lors de l’ajout au panier :', err);
