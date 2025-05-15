@@ -27,17 +27,62 @@ html
           h1= product.name
           p.price $#{product.price}
           p.description= product.description
-          button(type="button") Add to Cart
+          button(type="button" id="add-to-cart", data-product-id=product.id ) Add to Cart
           a.back-link(href="/storefront") ← Back to Shop
 
     footer
       | © 2025 CreatureCo. All rights reserved.
     script. 
-      document.addEventListener("DOMContentLoaded", function () {
-        const token = localStorage.getItem("authToken");
-        if (token) {
-          const nav = document.getElementById("auth-link");
-          nav.textContent = "My Profile";
-          nav.href = "/profile";
-        }        
-      });
+        document.addEventListener("DOMContentLoaded", function () {
+            const token = localStorage.getItem("authToken");
+            if (token) {
+                const nav = document.getElementById("auth-link");
+                nav.textContent = "My Profile";
+                nav.href = "/profile";
+            }        
+        });
+    script.
+        document.addEventListener("DOMContentLoaded", () => {
+            const button = document.getElementById('add-to-cart');
+
+            button.addEventListener('click', () => {
+                const productId = button.getAttribute('data-product-id');
+                const token = localStorage.getItem('authToken');
+
+                if (!token) {
+                    alert('Vous devez être connecté pour ajouter au panier.');
+                    return;
+                }
+
+                fetch('/product/addToCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ productId: productId })
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Erreur serveur');
+                    return res.json();
+                })
+                .then(data => {
+                    alert(data.message);
+                    /*
+                    fetch('/product/addToCart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify({ updCart: data.updCart })
+                    })
+                    */
+                })
+                .catch(err => {
+                    console.error('Erreur lors de l’ajout au panier :', err);
+                    alert('Impossible d’ajouter le produit au panier.');
+                });
+            });
+        });
+

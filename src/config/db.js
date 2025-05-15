@@ -4,7 +4,7 @@ const products = require('./productsConfig');
 
 require('dotenv').config();
 
-const db = new sqlite3.Database(dbPath, (err) => {
+const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
         console.error('Error opening database: ', err.message);
     } else {

@@ -14,3 +14,7 @@ exports.loginPasswword = db.prepare(`
 exports.loginDatas = db.prepare(`
     SELECT * FROM Users WHERE email = ? AND password = ?
 `);
+
+exports.setProductToCart = db.prepare(`
+    UPDATE carts SET product_ids = ? WHERE user_id = ?
+`)
