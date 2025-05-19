@@ -102,7 +102,7 @@ main {
     color: green;
 }
 
-button {
+.info button {
     margin: 1rem;
     padding: 0.75rem 1.5rem;
     background-color: #222;
