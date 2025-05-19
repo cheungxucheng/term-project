@@ -4,7 +4,7 @@ html
     meta(charset="utf-8")
     title CreatureCo
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel="stylesheet", href="/css/storefront.css")
+    link(rel="stylesheet", href="/css/search.css")
   body
     header
       .logo 
@@ -20,10 +20,8 @@ html
         a(href="#") Contact
         .cart-icon 
           a(href="/checkout") 🛒
-    .welcome
-      h1(id="welcome") Welcome, Guest!
     main
-      h2 Latest Products:
+      h2= "Results for: " + keyword
       .product-grid
         each val, key in products
           .product-box 
@@ -35,7 +33,7 @@ html
                 .product-desc= val.description
     footer
       | © 2025 CreatureCo. All rights reserved.
-    script.       
+    script. 
       document.addEventListener("DOMContentLoaded", function () {
         const token = localStorage.getItem("authToken");
         if (token) {
@@ -48,5 +46,3 @@ html
           nav.href = "/profile";
         }        
       });
-
-      

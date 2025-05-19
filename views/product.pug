@@ -9,8 +9,9 @@ html
     header
       .logo 
         a(href="/storefront") CreatureCo
-      .search-bar
-        input(type="text", placeholder="Search products...")
+      form.search-bar(action="/search" method="POST")
+        input(name="keyword" id="userInput" type="text", placeholder="Search products..." required)
+        button(type="submit") 🔎
       .user-actions 
         a(href="/" id="auth-link") Login/Register
         a(href="/storefront") Home
