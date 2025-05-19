@@ -1,52 +1,69 @@
 doctype html
 html
-  head
-    meta(charset="utf-8")
-    title CreatureCo
-    meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel="stylesheet", href="/css/storefront.css")
-  body
-    header
-      .logo 
-        a(href="/storefront") CreatureCo
-      form.search-bar(action="/search" method="POST")
-        input(name="keyword" id="userInput" type="text", placeholder="Search products..." required)
-        button(type="submit") 🔎
-      .user-actions 
-        a(href="/" id="auth-link") Login/Register
-        a(href="/storefront") Home
-        a(href="#") Shop
-        a(href="/about") About
-        a(href="#") Contact
-        .cart-icon 
-          a(href="/checkout") 🛒
-    .welcome
-      h1(id="welcome") Welcome, Guest!
-    main
-      h2 Latest Products:
-      .product-grid
-        each val, key in products
-          .product-box 
-            a(href=`/product/${val.id}`)
-              .product 
-                img(src=val.imageUrl alt="Image of Product") 
-                .product-name= val.name 
-                .product-price= "$" + val.price
-                .product-desc= val.description
-    footer
-      | © 2025 CreatureCo. All rights reserved.
-    script.       
-      document.addEventListener("DOMContentLoaded", function () {
-        const token = localStorage.getItem("authToken");
-        if (token) {
-          const nav = document.getElementById("auth-link");
-          const welcomeEl = document.getElementById("welcome");
-          const user = JSON.parse(atob(token.split(".")[1]));
+    head
+        meta(charset="utf-8")
+        title CreatureCo
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/storefront.css")
+    body
+        header
+            .logo 
+                a(href="/storefront") CreatureCo
+            form.search-bar(action="/search" method="POST")
+                input(name="keyword" id="userInput" type="text", placeholder="Search products..." required)
+                button(type="submit") 🔎
+            .menu
+                button#button-menu(onclick="openMenu()")
+                    img(src="/images/menu.png", alt="menu" width="30" height="30")
+            .menu-open-close.hidden#menu
+                .user-actions-menu
+                    a(href="/" id="auth-link") Login/Register
+                    a(href="/storefront") Home
+                    a(href="#") Shop
+                    a(href="/about") About
+                    a(href="#") Contact
+                    .cart-icon 
+                        a(href="/checkout") 🛒
 
-          welcomeEl.textContent = `Welcome back, ${user.dbres2.firstname}!`;
-          nav.textContent = "My Profile";
-          nav.href = "/profile";
-        }        
-      });
+        .user-actions
+            a(href="/" id="auth-link") Login/Register
+            a(href="/storefront") Home
+            a(href="#") Shop
+            a(href="/about") About
+            a(href="#") Contact
+            .cart-icon 
+                a(href="/checkout") 🛒
+        .welcome
+        h1(id="welcome") Welcome, Guest!
+        main
+            h2 Latest Products:
+            .product-grid
+                each val, key in products
+                    .product-box 
+                        a(href=`/product/${val.id}`)
+                        .product 
+                            img(src=val.imageUrl alt="Image of Product") 
+                            .product-name= val.name 
+                            .product-price= "$" + val.price
+                            .product-desc= val.description
+        footer
+            | © 2025 CreatureCo. All rights reserved.
+        script.       
+            document.addEventListener("DOMContentLoaded", function () {
+                const token = localStorage.getItem("authToken");
+                if (token) {
+                const nav = document.getElementById("auth-link");
+                const welcomeEl = document.getElementById("welcome");
+                const user = JSON.parse(atob(token.split(".")[1]));
 
+                welcomeEl.textContent = `Welcome back, ${user.dbres2.firstname}!`;
+                nav.textContent = "My Profile";
+                nav.href = "/profile";
+                }        
+            });
+        script.
+            function openMenu() {
+                const menu = document.getElementById('menu');
+                menu.classList.toggle('hidden');
+            }
       

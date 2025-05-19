@@ -118,3 +118,15 @@ main {
 .login-wrapper a {
     color:#007BFF;
 }
+
+@media (max-width: 600px) {
+    header {
+        background: #333;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 30px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }    
+}
