@@ -8,6 +8,7 @@ const storefrontRoutes = require('./src/routes/storefront/storefront');
 const productRoutes = require('./src/routes/product/product');
 const checkoutRoutes = require('./src/routes/checkout/checkout');
 const profileRoutes = require('./src/routes/profile/profile');
+const searchRoutes = require('./src/routes/search/search')
 const port = process.env.PORT || 3000;
 
 app.set('view engine', 'pug');
@@ -22,6 +23,7 @@ app.use('/checkout', checkoutRoutes);
 app.use('/storefront', storefrontRoutes);
 app.use('/product', productRoutes);
 app.use('/profile', profileRoutes);
+app.use('/search', searchRoutes);
 
 require('./src/routes/auth/auth')(app);
 
