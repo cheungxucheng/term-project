@@ -22,14 +22,26 @@ router.get('/:id', (req, res) => {
 router.post('/addToCart', async (req, res) => {
     const { productId } = req.body;
     const authHeader = req.headers.authorization;
-  
+
     if (!authHeader) {
-        return res.status(401).json({ error: 'Aucun token fourni' });
+        return res.status(401).json({ error: 'No token provided' });
     }
 
     const token = authHeader.split(' ')[1];
-    const decoded = jsw.verify(token, process.env.SECRET);
-    const user_id = decoded.dbres2.id;
+
+    let user_id;
+    try {
+        const decoded = jsw.verify(token, process.env.SECRET);
+
+        if (!decoded || !decoded.dbres2 || !decoded.dbres2.id) {
+            return res.status(401).json({ error: 'Token structure invalid' });
+        }
+
+        user_id = decoded.dbres2.id;
+    } catch (err) {
+        console.error("JWT decode error:", err.message);
+        return res.status(401).json({ error: 'Invalid or expired token' });
+    }
 
     db.serialize(() => {
         db.get('SELECT product_ids from carts where user_id = ?', [user_id], (err2, res2) => {
