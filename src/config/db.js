@@ -26,25 +26,27 @@ function initializeDatabase() {
         `);
 
         db.run(`
-            CREATE TABLE IF NOT EXISTS Products (
+            CREATE TABLE IF NOT EXISTS Carts (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL UNIQUE,
-                price REAL NOT NULL,
-                description TEXT,
-                imageUrl TEXT
+                user_id INT UNIQUE NOT NULL,
+                product_ids TEXT,
+                FOREIGN KEY (user_id) REFERENCES Users(id)
             )
         `);
 
         db.run(`
-            CREATE TABLE IF NOT EXISTS carts (
+            CREATE TABLE IF NOT EXISTS Orders (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INT UNIQUE NOT NULL,
-                product_ids TEXT,
-                FOREIGN KEY (user_id) REFERENCES users(id)
+                user_id INTEGER NOT NULL,
+                order_total REAL,
+                status TEXT,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES Users(id)
             )
         `, () => {
-            //insertDefaultProducts();
+            // insertDefaultProducts();
         });
+
     });
 }
 
