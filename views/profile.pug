@@ -44,10 +44,14 @@ html(lang="en")
 
             section.profile-content
                 .profile-section
-                h3 Recent Orders
-                ul
-                    li Order #1024 - $45.99 - Delivered
-                    li Order #1017 - $22.50 - Shipped
+                    h3 Recent Orders
+                    ul
+                         //- --- Added: Dynamically show user's orders ---
+                        if orders && orders.length
+                            each order in orders
+                                li Order ##{order.id} - $#{order.order_total.toFixed(2)} - #{order.status} - #{new Date(order.created_at).toLocaleDateString()}
+                        else
+                            li No past orders found.
 
             .profile-section
             h3 Account Settings
