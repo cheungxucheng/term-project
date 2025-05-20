@@ -33,17 +33,6 @@ a{
     font-weight: bold;
 }
 
-.user-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.cart-icon {
-    font-size: 20px;
-    cursor: pointer;
-}
-
 footer {
     background: #333;
     color: white;
@@ -102,4 +91,11 @@ main {
 
 .registration-form button:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+    header {
+        background: #333;
+    
+    }    
 }

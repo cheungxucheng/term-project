@@ -1,0 +1,181 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title CreatureCo - FAQ
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/css/faq.css")
+
+  body
+    header
+      .logo
+        a(href="/storefront") CreatureCo
+
+      form.search-bar(action="/search" method="POST")
+        input#userInput(type="text" name="keyword" placeholder="Search products..." required)
+        button(type="submit") 🔎
+      
+      .menu
+        button#button-menu(onclick="openMenu()")
+          img(src="/images/menu.png", alt="menu" width="30" height="30")
+      .menu-open-close.hidden#menu
+        .user-actions-menu
+          a(href="/" id="auth-link") Login/Register
+          a(href="/storefront") Home
+          a(href="#") Shop
+          a(href="/about") About
+          a(href="#") Contact
+          .cart-icon 
+              a(href="/checkout") 🛒
+      .user-actions
+        a(href="/" id="auth-link") Login/Register
+        a(href="/storefront") Home
+        a(href="#") Shop
+        a(href="/about") About
+        a(href="#") Contact
+        .cart-icon
+          a(href="/checkout") 🛒
+
+    main
+      h1 Help Center
+
+      .search-box
+        label(for="search")
+          strong How can we help?
+        br
+        input#search(type="text" placeholder="Type your question...")
+
+      .order-help
+        p
+          strong Problems with an order?
+        a(href="#") Get help with order
+
+      .faq-section
+        h2 Frequently Asked Questions
+
+        //- Shipping & Delivery
+        details
+          summary Shipping & Delivery
+          .faq-question
+            strong When will my order arrive?
+            p Delivery usually takes 3-7 business days depending on your location.
+          .faq-question
+            strong How can I track my shipment?
+            p You will receive a tracking link via email once your order has shipped.
+          .faq-question
+            strong Do you ship internationally?
+            p Yes, we ship to most countries worldwide. Shipping fees and delivery times vary by region.
+          .faq-question
+            strong What are your shipping fees?
+            p Standard shipping is $99.99.
+          .faq-question
+            strong What if my package is delayed or lost?
+            p Please contact our support team, and we'll investigate with the carrier immediately.
+
+        //- Returns & Exchanges
+        details
+          summary Returns & Exchanges
+          .faq-question
+            strong What is your return policy?
+            p You can return within 30 days
+          .faq-question
+            strong How do I start a return or exchange?
+            p Visit our Returns Portal and enter your order number to begin the process.
+          .faq-question
+            strong How long does it take to process a refund?
+            p Refunds are processed within 5–10 business days after receiving your return.
+
+        //- Payment Methods
+        details
+          summary Payment Methods
+          .faq-question
+            strong What payment methods do you accept?
+            p We accept credit cards, PayPal, Apple Pay, and Google Pay.
+          .faq-question
+            strong Is my payment information secure?
+            p Yes, all transactions are encrypted and processed securely.
+          .faq-question
+            strong Can I pay with multiple cards?
+            p Unfortunately, we do not support split payments at this time.
+          .faq-question
+            strong Do you offer financing or payment plans?
+            p Yes, we partner with Affirm and Klarna for flexible payment options.
+          .faq-question
+            strong Why was my payment declined?
+            p This could be due to incorrect info, expired cards, or bank restrictions. Please check with your bank.
+
+        //- Order Management
+        details
+          summary Order Management
+          .faq-question
+            strong How do I cancel or change my order?
+            p Contact us within 1 hour of placing your order to make changes or cancel it.
+          .faq-question
+            strong Can I update my shipping address after placing an order?
+            p If your order hasn't shipped, we can update the address. Please contact support ASAP.
+          .faq-question
+            strong How do I view my order history?
+            p Log in to your account and go to "Order History" to view all past purchases.
+          .faq-question
+            strong I didn’t receive a confirmation email—what should I do?
+            p Check your spam folder. If it’s not there, contact support to confirm your order.
+          .faq-question
+            strong What happens if I ordered the wrong item?
+            p You can request a return or exchange within 30 days of receiving your order.
+
+        //- Product Information
+        details
+          summary Product Information
+          .faq-question
+            strong Where can I find size or compatibility details?
+            p Each product page contains a sizing chart or compatibility guide in the description section.
+          .faq-question
+            strong Do you offer product warranties?
+            p Yes, most of our products come with a 1-year limited warranty.
+          .faq-question
+            strong Are your products eco-friendly or ethically sourced?
+            p We prioritize sustainability and partner with responsible suppliers whenever possible.
+          .faq-question
+            strong Can I get a sample before buying?
+            p We currently do not offer samples but provide detailed descriptions and reviews to help with decisions.
+          .faq-question
+            strong How do I know if an item is in stock?
+            p Availability is shown on each product page. If an item is out of stock, you can sign up for restock alerts.
+
+        //- Contact Information
+        details
+          summary Contact Information
+          .faq-question
+            strong How can I reach customer service?
+            p You can reach us via email at support@example.com or through our contact form.
+          .faq-question
+            strong What are your customer service hours?
+            p Our team is available Monday–Friday, 9am–5pm (EST).
+          .faq-question
+            strong Do you offer live chat or phone support?
+            p Yes, live chat is available on our website during business hours. Phone support is coming soon.
+          .faq-question
+            strong Where is your company located?
+            p We are headquartered in Austin, Texas.
+          .faq-question
+            strong How can I provide feedback or file a complaint?
+            p Use our feedback form or contact us directly to share concerns or suggestions.
+
+    footer
+      | © 2025 CreatureCo. All rights reserved.
+
+    script.
+      document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+          const nav = document.getElementById("auth-link");
+          nav.textContent = "My Profile";
+          nav.href = "/profile";
+        }
+      });
+    script.
+      function openMenu() {
+          const menu = document.getElementById('menu');
+          menu.classList.toggle('hidden');
+      }
+      

@@ -5,7 +5,7 @@ html
         title CreatureCo
         meta(name="viewport", content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="/css/storefront.css")
-    body
+    body 
         header
             .logo 
                 a(href="/storefront") CreatureCo
@@ -25,27 +25,27 @@ html
                     .cart-icon 
                         a(href="/checkout") 🛒
 
-        .user-actions
-            a(href="/" id="auth-link") Login/Register
-            a(href="/storefront") Home
-            a(href="#") Shop
-            a(href="/about") About
-            a(href="#") Contact
-            .cart-icon 
-                a(href="/checkout") 🛒
+            .user-actions
+                a(href="/" id="auth-link") Login/Register
+                a(href="/storefront") Home
+                a(href="#") Shop
+                a(href="/about") About
+                a(href="#") Contact
+                .cart-icon 
+                    a(href="/checkout") 🛒
         .welcome
         h1(id="welcome") Welcome, Guest!
         main
             h2 Latest Products:
             .product-grid
                 each val, key in products
-                    .product-box 
+                    .product-box
                         a(href=`/product/${val.id}`)
-                        .product 
-                            img(src=val.imageUrl alt="Image of Product") 
-                            .product-name= val.name 
-                            .product-price= "$" + val.price
-                            .product-desc= val.description
+                            .product 
+                                img(src=val.imageUrl alt="Image of Product") 
+                                .product-name= val.name 
+                                .product-price= "$" + val.price
+                                .product-desc= val.description
         footer
             | © 2025 CreatureCo. All rights reserved.
         script.       

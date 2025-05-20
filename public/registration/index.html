@@ -1,84 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Registration Page</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header>
+            <div class="logo">CreatureCo</div>
+        </header>
+        <main>
+            <div class="registration-wrapper">
+                <form class="registration-form" method="POST" id="registrationForm">
+                    <h2>Make an Account</h2>
+                    <label for="email">Email: </label>
+                    <input id="email" name="email" type="email" placeholder="" required>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Page</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+                    <label for="firstname">First Name: </label>
+                    <input id="firstname" name="firstname" type="first-name" placeholder="" required>
 
-<body>
-    <header>
-        <div class="logo">CreatureCo</div>
-        <div class="user-actions">
-            <a href="/storefront">Home</a>
-            <a href="#">Shop</a>
-            <a href="/about">About</a>
-            <a href="#">Contact</a>
-            <div class="cart-icon">🛒</div>
-        </div>
-    </header>
+                    <label for="lastname">Last Name: </label>
+                    <input id="lastname" name="lastname" type="last-name" placeholder="" required>
 
-    <main>
-        <div class="registration-wrapper">
-            <form class="registration-form" method="POST" id="registrationForm">
-                <h2>Make an Account</h2>
-                <label for="email">Email: </label>
-                <input id="email" name="email" type="email" placeholder="" required>
+                    <label for="password">Password: </label>
+                    <input id="password" name="password" type="password" placeholder="" required>
 
-                <label for="firstname">First Name: </label>
-                <input id="firstname" name="firstname" type="first-name" placeholder="" required>
+                    <button type="submit">Register</button>
+                </form>
+                <script>
+                    document.getElementById('registrationForm').addEventListener('submit', async function(event) {
+                        event.preventDefault(); // Empêche le rechargement de la page
+            
+                        const form = event.target;
+                        const data = {
+                            email: document.getElementById('email').value,
+                            firstname: document.getElementById('firstname').value,
+                            lastname: document.getElementById('lastname').value,
+                            password: document.getElementById('password').value,
+                        };
+            
+                        try {
+                            const response = await fetch('/registration', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            });
 
-                <label for="lastname">Last Name: </label>
-                <input id="lastname" name="lastname" type="last-name" placeholder="" required>
-
-                <label for="password">Password: </label>
-                <input id="password" name="password" type="password" placeholder="" required>
-
-                <button type="submit">Register</button>
-            </form>
-            <script>
-                document.getElementById('registrationForm').addEventListener('submit', async function(event) {
-                    event.preventDefault(); // Empêche le rechargement de la page
-        
-                    const form = event.target;
-                    const data = {
-                        email: document.getElementById('email').value,
-                        firstname: document.getElementById('firstname').value,
-                        lastname: document.getElementById('lastname').value,
-                        password: document.getElementById('password').value,
-                    };
-        
-                    try {
-                        const response = await fetch('/registration', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        });
-
-                        if (!response.ok) {
-                            throw new Error('Échec de l’inscription');
+                            if (!response.ok) {
+                                throw new Error('Échec de l’inscription');
+                            }
+            
+                            const result = await response.json();
+                            localStorage.setItem('authToken', result.token);
+            
+                            window.location.href = '/storefront';
+            
+                        } catch (error) {
+                            alert('Erreur : ' + error.message);
                         }
-        
-                        const result = await response.json();
-                        localStorage.setItem('authToken', result.token);
-        
-                        window.location.href = '/storefront';
-        
-                    } catch (error) {
-                        alert('Erreur : ' + error.message);
-                    }
-                });
-            </script>
-        </div>
-    </main>
-</body>
-
-<footer>
-    &copy; 2025 CreatureCo. All rights reserved.
-</footer>
-
+                    });
+                </script>
+            </div>
+        </main>
+    </body>
+    <footer>
+        &copy; 2025 CreatureCo. All rights reserved.
+    </footer>
 </html>

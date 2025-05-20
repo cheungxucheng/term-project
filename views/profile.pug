@@ -1,64 +1,82 @@
 doctype html
 html(lang="en")
-  head
-    meta(charset="UTF-8")
-    title User Profile
-    meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel="stylesheet", href="/css/profile.css")
+    head
+        meta(charset="UTF-8")
+        title User Profile
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/profile.css")
 
-  body
-    header
-      .logo
-        a(href="/storefront") CreatureCo
-      form.search-bar(action="/search" method="POST")
-        input(name="keyword" id="userInput" type="text", placeholder="Search products..." required)
-        button(type="submit") 🔎
-      .user-actions
-        a(href="/" id="auth-link") Login/Register
-        a(href="/storefront") Home
-        a(href="#") Shop
-        a(href="/about") About
-        a(href="#") Contact
-        .cart-icon 
-            a(href="/checkout") 🛒
+    body
+        header
+            .logo
+                a(href="/storefront") CreatureCo
+            form.search-bar(action="/search" method="POST")
+                input(name="keyword" id="userInput" type="text", placeholder="Search products..." required)
+                button(type="submit") 🔎
+            .menu
+                button#button-menu(onclick="openMenu()")
+                    img(src="/images/menu.png", alt="menu" width="30" height="30")
+            .menu-open-close.hidden#menu
+                .user-actions-menu
+                    a(href="/" id="auth-link") Login/Register
+                    a(href="/storefront") Home
+                    a(href="#") Shop
+                    a(href="/about") About
+                    a(href="#") Contact
+                    .cart-icon 
+                        a(href="/checkout") 🛒
+            .user-actions
+                a(href="/" id="auth-link") Login/Register
+                a(href="/storefront") Home
+                a(href="#") Shop
+                a(href="/about") About
+                a(href="#") Contact
+                .cart-icon 
+                    a(href="/checkout") 🛒
 
 
-    main.profile-container
-      section.profile-card
-        img.profile-img(src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", alt="Profile Picture")
-        h2(id="name") name
-        p(id="email") email
-        p Member since: Jan 2023
+        main.profile-container
+            section.profile-card
+                img.profile-img(src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", alt="Profile Picture")
+                h2(id="name") name
+                p(id="email") email
+                p Member since: Jan 2023
 
-      section.profile-content
-        .profile-section
-          h3 Recent Orders
-          ul
-            li Order #1024 - $45.99 - Delivered
-            li Order #1017 - $22.50 - Shipped
+            section.profile-content
+                .profile-section
+                h3 Recent Orders
+                ul
+                    li Order #1024 - $45.99 - Delivered
+                    li Order #1017 - $22.50 - Shipped
 
-        .profile-section
-          h3 Account Settings
-          button Edit Profile
-          button Change Password
+            .profile-section
+            h3 Account Settings
+            button Edit Profile
+            button Change Password
 
-    footer.site-footer
-      | © 2025 CreatureCo. All rights reserved.
-    script. 
-      document.addEventListener("DOMContentLoaded", function () {
-        const token = localStorage.getItem("authToken");
-        if (token) {
-          const name = document.getElementById("name");
-          const email = document.getElementById("email");
-          const nav = document.getElementById("auth-link");
-          const user = JSON.parse(atob(token.split(".")[1]));
+        footer.site-footer
+            | © 2025 CreatureCo. All rights reserved.
+        script.
+            document.addEventListener("DOMContentLoaded", function () {
+                const token = localStorage.getItem("authToken");
+                if (token) {
+                const name = document.getElementById("name");
+                const email = document.getElementById("email");
+                const nav = document.getElementById("auth-link");
+                const user = JSON.parse(atob(token.split(".")[1]));
 
-          nav.textContent = "My Profile";
-          nav.href = "/profile";
-          name.textContent = user.dbres2.firstname + " " + user.dbres2.lastname;
-          email.textContent = user.dbres2.email;
-        }        
-        else {
-          window.location.href = '/'; // Redirect to login if error
-        }
-      });
+                nav.textContent = "My Profile";
+                nav.href = "/profile";
+                name.textContent = user.dbres2.firstname + " " + user.dbres2.lastname;
+                email.textContent = user.dbres2.email;
+                }        
+                else {
+                window.location.href = '/'; // Redirect to login if error
+                }
+            });
+        script.
+            function openMenu() {
+                const menu = document.getElementById('menu');
+                menu.classList.toggle('hidden');
+                console.log("frewfr")
+            }

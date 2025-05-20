@@ -1,0 +1,91 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    title CreatureCo
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet" href="/css/about.css")
+
+  body
+    header
+      .logo
+        a(href="/storefront") CreatureCo
+
+      form.search-bar(action="/search" method="POST")
+        input#userInput(type="text" name="keyword" placeholder="Search products..." required)
+        button(type="submit") 🔎
+      
+      .menu
+        button#button-menu(onclick="openMenu()")
+          img(src="/images/menu.png", alt="menu" width="30" height="30")
+      .menu-open-close.hidden#menu
+        .user-actions-menu
+          a(href="/" id="auth-link") Login/Register
+          a(href="/storefront") Home
+          a(href="#") Shop
+          a(href="/about") About
+          a(href="#") Contact
+          .cart-icon 
+            a(href="/checkout") 🛒
+
+      .user-actions
+        a(href="/" id="auth-link") Login/Register
+        a(href="/storefront") Home
+        a(href="#") Shop
+        a(href="/about") About
+        a(href="#") Contact
+        .cart-icon
+          a(href="/checkout") 🛒
+
+    main.content
+      h1 About CreatureCo
+
+      .aboutCards
+        .OurVision
+          h2 Our Vision
+          p
+            | Our vision is to create the most trusted and convenient online destination for pet lovers,
+            | offering a wide range of high-quality products, expert advice, and personalized service.
+            | We aim to build a community that supports the health, happiness, and well-being of animals everywhere.
+
+        .HowItWorks
+          h2 How it works
+          p
+            | We operate with a customer-first mindset, sourcing high-quality pet products from trusted suppliers
+            | and ensuring efficient order fulfillment through our streamlined logistics network.
+            | Our dedicated team works behind the scenes to provide fast shipping, responsive support,
+            | and a smooth shopping experience from start to finish.
+
+        .ShoppingMadeEasy
+          h2 Shopping Made Easy
+          p
+            | Our website is designed with simplicity in mind—intuitive navigation, smart search filters,
+            | and clear product details make finding the right items quick and easy.
+            | With features like one-click reordering, saved preferences, and a smooth checkout process,
+            | shopping for your pet has never been more convenient.
+
+        .ShopSecurely
+          h2 Shop Securely
+          p
+            | We take the security of our customers' information seriously,
+            | using advanced encryption and secure servers to protect all personal and payment data.
+            | Our privacy policies are transparent, and we never share your information without consent,
+            | ensuring a safe and trustworthy shopping experience.
+
+    footer
+      | © 2025 CreatureCo. All rights reserved.
+
+    script.
+      document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+          const nav = document.getElementById("auth-link");
+          nav.textContent = "My Profile";
+          nav.href = "/profile";
+        }
+      });
+    script.
+      function openMenu() {
+          const menu = document.getElementById('menu');
+          menu.classList.toggle('hidden');
+      }

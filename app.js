@@ -8,7 +8,9 @@ const storefrontRoutes = require('./src/routes/storefront/storefront');
 const productRoutes = require('./src/routes/product/product');
 const checkoutRoutes = require('./src/routes/checkout/checkout');
 const profileRoutes = require('./src/routes/profile/profile');
-const searchRoutes = require('./src/routes/search/search')
+const searchRoutes = require('./src/routes/search/search');
+const faqRoutes = require('./src/routes/faq/faq');
+const aboutRoutes = require('./src/routes/about/about');
 const port = process.env.PORT || 3000;
 
 app.set('view engine', 'pug');
@@ -24,6 +26,8 @@ app.use('/storefront', storefrontRoutes);
 app.use('/product', productRoutes);
 app.use('/profile', profileRoutes);
 app.use('/search', searchRoutes);
+app.use('/faq', faqRoutes)
+app.use('/about', aboutRoutes)
 
 require('./src/routes/auth/auth')(app);
 
@@ -33,14 +37,6 @@ app.get('/', (req, res) => {
 
 app.get('/registration', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'registration', 'index.html'));
-})
-
-app.get('/faq', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'FAQ', 'index.html'));
-})
-
-app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'About', 'index.html'));
 })
 
 app.listen(port , () => {

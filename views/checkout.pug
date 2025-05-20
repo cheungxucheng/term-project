@@ -1,139 +1,156 @@
 html
-  head
-    meta(charset="utf-8")
-    title My Cart
-    meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel="stylesheet", href="/css/checkout.css")
-  body
-    header
-      .logo 
-        a(href="/storefront") CreatureCo
-      form.search-bar(action="/search" method="POST")
-        input(name="keyword" id="userInput" type="text", placeholder="Search products..." required)
-        button(type="submit") 🔎
-      .user-actions 
-        a(href="/" id="auth-link") Login/Register
-        a(href="/storefront") Home
-        a(href="#") Shop
-        a(href="/about") About
-        a(href="#") Contact
-        .cart-icon 
-          a(href="/checkout") 🛒
+    head
+        meta(charset="utf-8")
+        title My Cart
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/checkout.css")
+    body
+        header
+            .logo 
+                a(href="/storefront") CreatureCo
+            form.search-bar(action="/search" method="POST")
+                input(name="keyword" id="userInput" type="text", placeholder="Search products..." required)
+                button(type="submit") 🔎
+            .menu
+                button#button-menu(onclick="openMenu()")
+                    img(src="/images/menu.png", alt="menu" width="30" height="30")
+            .menu-open-close.hidden#menu
+                .user-actions-menu
+                    a(href="/" id="auth-link") Login/Register
+                    a(href="/storefront") Home
+                    a(href="#") Shop
+                    a(href="/about") About
+                    a(href="#") Contact
+                    .cart-icon 
+                        a(href="/checkout") 🛒
+            .user-actions 
+                a(href="/" id="auth-link") Login/Register
+                a(href="/storefront") Home
+                a(href="#") Shop
+                a(href="/about") About
+                a(href="#") Contact
+                .cart-icon 
+                a(href="/checkout") 🛒
 
-    main 
-      .cart-container#cart-items
+        main 
+            .cart-container#cart-items
 
-      .purchase-container
-        h1 The products in your cart are:
-        .cart-list-container#cart-list
-        .total
-          strong Total: 
-          span#cart-total $0.00
-        button(type="button") Check Out
+            .purchase-container
+                h1 The products in your cart are:
+                .cart-list-container#cart-list
+                .total
+                    strong Total: 
+                    span#cart-total $0.00
+                button(type="button") Check Out
 
-    footer
-      | © 2025 CreatureCo. All rights reserved.
-    script. 
-        document.addEventListener("DOMContentLoaded", function () {
-            const token = localStorage.getItem("authToken");
-            if (token) {
-                const nav = document.getElementById("auth-link");
-                nav.textContent = "My Profile";
-                nav.href = "/profile";
-            }        
-        });
-    script.
-        function loadCart(token) {
-            fetch('/checkout/api', {
-                method: 'GET',
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                const cartItems = document.getElementById("cart-items");
-                const cartList = document.getElementById("cart-list");
-                const cartTotal = document.getElementById("cart-total");
+        footer
+            | © 2025 CreatureCo. All rights reserved.
+        script. 
+            document.addEventListener("DOMContentLoaded", function () {
+                const token = localStorage.getItem("authToken");
+                if (token) {
+                    const nav = document.getElementById("auth-link");
+                    nav.textContent = "My Profile";
+                    nav.href = "/profile";
+                }        
+            });
+        script.
+            function loadCart(token) {
+                fetch('/checkout/api', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    const cartItems = document.getElementById("cart-items");
+                    const cartList = document.getElementById("cart-list");
+                    const cartTotal = document.getElementById("cart-total");
 
-                cartItems.innerHTML = "";
-                cartList.innerHTML = "";
-                cartTotal.textContent = "";
+                    cartItems.innerHTML = "";
+                    cartList.innerHTML = "";
+                    cartTotal.textContent = "";
 
-                let subTotal = 0;
+                    let subTotal = 0;
 
-                console.log(data)
+                    console.log(data)
 
-                if (data.products == '') {
-                    const item = document.createElement("div");
-                    item.classList.add("cart-item");
-                    item.innerHTML = `
-                    <p>No products in your carts</p>
-                    `;
-                    cartItems.appendChild(item);
-
-                    const listItem = document.createElement("div");
-                    listItem.classList.add("cart-list");
-                    cartList.appendChild(listItem);
-                } else  {
-                    data.products.forEach((product, index) => {
-                        console.log(data.products)
-                        subTotal += product.price;
-
+                    if (data.products == '') {
                         const item = document.createElement("div");
                         item.classList.add("cart-item");
                         item.innerHTML = `
-                        <div class="container-img">
-                            <img src="${product.imageUrl || '/images/default.png'}" width="120" height="180" class="img-products" alt="Image of ${product.name}">
-                            <button onclick="popProduct('${product.id}', '${index}')"><img src="/images/trash.png" class="trash-icon" alt="Trash icon"></button>
-                        </div>
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-price">$${product.price.toFixed(2)}</div>
-                        <div class="product-desc">${product.description || ''}</div>
+                        <p>No products in your carts</p>
                         `;
                         cartItems.appendChild(item);
 
                         const listItem = document.createElement("div");
                         listItem.classList.add("cart-list");
-                        listItem.textContent = product.name;
                         cartList.appendChild(listItem);
-                    });
-                }
-                cartTotal.textContent = `$${subTotal.toFixed(2)}`;
-            })
-            .catch(err => console.error("Erreur lors de la récupération du panier :", err));
-        }
-        document.addEventListener("DOMContentLoaded", function () {
-            const token = localStorage.getItem("authToken");
-            if (token) {
-                const nav = document.getElementById("auth-link");
-                nav.textContent = "My Profile";
-                nav.href = "/profile";
+                    } else  {
+                        data.products.forEach((product, index) => {
+                            console.log(data.products)
+                            subTotal += product.price;
 
-                loadCart(token)
-            }
-        });
-    script.
-        function popProduct(product_id, index) {
-            const token = localStorage.getItem("authToken");    
-            console.log("index: ", index)
-            console.log("product_id: ", product_id)
+                            const item = document.createElement("div");
+                            item.classList.add("cart-item");
+                            item.innerHTML = `
+                            <div class="container-img">
+                                <img src="${product.imageUrl || '/images/default.png'}" width="120" height="180" class="img-products" alt="Image of ${product.name}">
+                                <button onclick="popProduct('${product.id}', '${index}')"><img src="/images/trash.png" class="trash-icon" alt="Trash icon"></button>
+                            </div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">$${product.price.toFixed(2)}</div>
+                            <div class="product-desc">${product.description || ''}</div>
+                            `;
+                            cartItems.appendChild(item);
 
-            if (token) {
-
-                fetch('/checkout/api', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + token
-                    },
-                    body: JSON.stringify({ product_id: product_id, index: index })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    loadCart(token)
-                    alert(data.message);
+                            const listItem = document.createElement("div");
+                            listItem.classList.add("cart-list");
+                            listItem.textContent = product.name;
+                            cartList.appendChild(listItem);
+                        });
+                    }
+                    cartTotal.textContent = `$${subTotal.toFixed(2)}`;
                 })
                 .catch(err => console.error("Erreur lors de la récupération du panier :", err));
             }
-        }
+            document.addEventListener("DOMContentLoaded", function () {
+                const token = localStorage.getItem("authToken");
+                if (token) {
+                    const nav = document.getElementById("auth-link");
+                    nav.textContent = "My Profile";
+                    nav.href = "/profile";
+
+                    loadCart(token)
+                }
+            });
+        script.
+            function popProduct(product_id, index) {
+                const token = localStorage.getItem("authToken");    
+                console.log("index: ", index)
+                console.log("product_id: ", product_id)
+
+                if (token) {
+
+                    fetch('/checkout/api', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        },
+                        body: JSON.stringify({ product_id: product_id, index: index })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        loadCart(token)
+                        alert(data.message);
+                    })
+                    .catch(err => console.error("Erreur lors de la récupération du panier :", err));
+                }
+            }
+        script.
+            function openMenu() {
+                const menu = document.getElementById('menu');
+                menu.classList.toggle('hidden');
+            }
