@@ -42,3 +42,31 @@ app.get('/registration', (req, res) => {
 app.listen(port , () => {
     console.log(`API at http://localhost:${port}`);
 });
+
+//Render Profile with orders
+const sqlite3 = require('sqlite3').verbose();
+
+app.get('/profile', (req, res) => {
+    const token = req.cookies.authToken; 
+
+    if (!token) return res.redirect('/');
+
+    const user = parseJwt(token).dbres2;
+    const userId = user.id;
+
+    const db = new sqlite3.Database('./database.sqlite');
+
+    db.all("SELECT * FROM carts WHERE user_id = ?", [userId], (err, orders) => {
+        if (err) return res.status(500).send("Could not load orders.");
+
+        res.render("profile", {
+            user: user,
+            orders: orders
+        });
+    });
+});
+
+// Helper to decode JWT 
+function parseJwt(token) {
+    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+}
