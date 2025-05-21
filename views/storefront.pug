@@ -20,7 +20,6 @@ html(lang="en")
                 .user-actions-menu
                     a(href="/" id="auth-link") Login/Register
                     a(href="/storefront") Home
-                    a(href="#") Shop
                     a(href="/about") About
                     a(href="#") Contact
                     .cart-icon 
@@ -29,7 +28,6 @@ html(lang="en")
             .user-actions
                 a(href="/" id="auth-link") Login/Register
                 a(href="/storefront") Home
-                a(href="#") Shop
                 a(href="/about") About
                 a(href="#") Contact
                 .cart-icon 
@@ -51,42 +49,7 @@ html(lang="en")
             // Optional enhancement: wrapped text in <p> tag for semantics
             p © 2025 CreatureCo. All rights reserved.
         // Added: safer JWT decode function to handle URL-safe base64
-        script.
-            function decodeJWT(token) {
-                const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-                return JSON.parse(jsonPayload);
-            }
-
-            document.addEventListener("DOMContentLoaded", function () 
-            {
-                const token = localStorage.getItem("authToken");
-                if (token) 
-                {
-                    const welcomeEl = document.getElementById("welcome");
-                    const navLinks = document.querySelectorAll("#auth-link");
-
-                    try 
-                    {
-                        const user = decodeJWT(token);
-                        if (user && user.dbres2 && user.dbres2.firstname) 
-                        {
-                            welcomeEl.textContent = `Welcome back, ${user.dbres2.firstname}!`;
-                            navLinks.forEach((nav) => 
-                            {
-                                nav.textContent = "My Profile";
-                                nav.href = "/profile";
-                            });
-                        }
-                    } 
-                    catch (err) 
-                    {
-                        console.error("Failed to decode JWT:", err);
-                    }
-                }        
-            });
+        script(src="/scripts/isAuth.js")
 
         // No change: Menu toggle remains the same
         script.

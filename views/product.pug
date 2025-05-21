@@ -19,7 +19,7 @@ html
                 .user-actions-menu
                     a(href="/" id="auth-link") Login/Register
                     a(href="/storefront") Home
-                    a(href="#") Shop
+                    
                     a(href="/about") About
                     a(href="#") Contact
                     .cart-icon 
@@ -27,7 +27,7 @@ html
             .user-actions 
                 a(href="/" id="auth-link") Login/Register
                 a(href="/storefront") Home
-                a(href="#") Shop
+                
                 a(href="/about") About
                 a(href="#") Contact
                 .cart-icon
@@ -45,6 +45,7 @@ html
 
         footer
             | © 2025 CreatureCo. All rights reserved.
+        script(src="/scripts/isAuth.js")
         script. 
             document.addEventListener("DOMContentLoaded", function () {
                 const token = localStorage.getItem("authToken");
