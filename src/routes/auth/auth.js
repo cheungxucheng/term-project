@@ -38,6 +38,7 @@ module.exports = function(app) {
                                 } else {
                                     console.log(color_green, "POST requesr Success: register");
                                     const token = jsw.sign({id: result.id, email: req.body.email, password: req.body.password}, process.env.SECRET)
+                                    res.cookie('authcookie', token, { secure: true, maxAge: 36000000 })
                                     res.status(200).json({ status: 'ok', token: token });
                                 }
                             })
@@ -63,6 +64,7 @@ module.exports = function(app) {
                             } else {
                                 const token = jsw.sign({dbres2}, process.env.SECRET);
                                 console.log(color_green, "POST request Success: login.");
+                                res.cookie('authcookie', token, { secure: true, maxAge: 36000000 })
                                 res.status(200).json({ status: 'ok', token: token });
                             }
                         });

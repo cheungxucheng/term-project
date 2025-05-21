@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 router.get('/', (req, res) => {
-    const token = req.cookies.authToken;
+    const token = req.cookies.authcookie;
+
     if (!token) {
         return res.redirect('/');
     }
@@ -20,6 +21,7 @@ router.get('/', (req, res) => {
         console.error('JWT verification error:', err.message);
         return res.redirect('/');
     }
+
     db.all('SELECT * FROM Orders WHERE user_id = ? ORDER BY created_at DESC', [user.id], (err, orders) => {
         if (err) {
             console.error('Error fetching orders:', err.message);
