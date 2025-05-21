@@ -51,6 +51,9 @@ function initializeDatabase() {
 }
 
 function insertDefaultProducts() {
+    // db.run(` 
+    //     DELETE FROM Products    
+    // `);
     const insertStmt = db.prepare(`
         INSERT OR IGNORE INTO Products (name, price, description, imageUrl)
         VALUES (?, ?, ?, ?)
