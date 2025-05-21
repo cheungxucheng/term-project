@@ -79,6 +79,7 @@ main {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    margin-left: 50px;
 }
 
 .product-box a {
@@ -87,6 +88,12 @@ main {
 
 .product {
     background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 250px;
+    width: 300px;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -95,8 +102,8 @@ main {
 
 .product img {
     width: 100%;
-    max-width: 150px;
-    height: auto;
+    max-width: 130px;
+    height: 50%;
 }
 
 

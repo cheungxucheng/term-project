@@ -33,7 +33,7 @@ html
                 .cart-icon 
                 a(href="/checkout") 🛒
         main
-            h2= "Results for: " + keyword
+            h2= products.length + " results for: " + keyword
             .product-grid
                 each val, key in products
                     .product-box 
@@ -46,19 +46,6 @@ html
         footer
             | © 2025 CreatureCo. All rights reserved.
         script(src="/scripts/isAuth.js")
-        script. 
-            document.addEventListener("DOMContentLoaded", function () {
-                const token = localStorage.getItem("authToken");
-                if (token) {
-                    const nav = document.getElementById("auth-link");
-                    const welcomeEl = document.getElementById("welcome");
-                    const user = JSON.parse(atob(token.split(".")[1]));
-
-                    welcomeEl.textContent = `Welcome back, ${user.dbres2.firstname}!`;
-                    nav.textContent = "My Profile";
-                    nav.href = "/profile";
-                }        
-            });
         script.
             function openMenu() {
                 const menu = document.getElementById('menu');
