@@ -4,14 +4,11 @@ const db = require('../../config/db');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-// GET /profile route
 router.get('/', (req, res) => {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-        return res.redirect('/');  
+    const token = req.cookies.authToken;
+    if (!token) {
+        return res.redirect('/');
     }
-    const token = authHeader.split(' ')[1];
-
     let user;
     try {
         const decoded = jwt.verify(token, process.env.SECRET);
@@ -23,13 +20,11 @@ router.get('/', (req, res) => {
         console.error('JWT verification error:', err.message);
         return res.redirect('/');
     }
-
     db.all('SELECT * FROM Orders WHERE user_id = ? ORDER BY created_at DESC', [user.id], (err, orders) => {
         if (err) {
             console.error('Error fetching orders:', err.message);
             return res.status(500).send('Server error');
         }
-
         res.render('profile', { user, orders });
     });
 });
