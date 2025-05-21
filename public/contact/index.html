@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="/storefront">CreatureCo</a>
+        </div>
+        <form class="search-bar" action="/search" method="POST">
+            <input name="keyword" id="userInput" type="text" placeholder="Search products..." required>
+            <button type="submit">🔎</button>
+        </form>
+        <div class="user-actions">
+            <div><a href="/" id="auth-link">Login/Register</a></div>
+            <a href="/storefront">Home</a>
+            <a href="/about">About</a>
+            <a href="contact">Contact</a>
+            <div class="cart-icon">
+                <a href="/checkout">🛒</a>
+            </div>
+        </div>
+    </header>
+    <div class="contact-container">
+        <h1>Contact Us</h1>
+        <p>If you have any questions, send us a message! Or visit our FAQ page <a href="/faq">here</a></p>
+        <form class="contact-form" action="#" method="post">
+            <input type="text" name="name" placeholder="Your Name" required />
+            <input type="email" name="email" placeholder="Your Email" required />
+            <input type="text" name="subject" placeholder="Subject" required />
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+    <script src="/scripts/isAuth.js"></script>
+</body>
+
+</html>

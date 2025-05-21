@@ -44,6 +44,10 @@ app.get('/registration', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'registration', 'index.html'));
 });
 
+app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'contact', 'index.html'));
+});
+
 app.listen(port, () => {
     console.log(`API running at http://localhost:${port}`);
 });
