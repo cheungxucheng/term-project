@@ -42,9 +42,10 @@ html(lang="en")
                         a(href=`/product/${val.id}`)
                             .product 
                                 img(src=val.imageUrl alt="Image of Product") 
-                                .product-name= val.name 
-                                .product-price= "$" + val.price
-                                .product-desc= val.description
+                                .product-text
+                                    .product-name= val.name 
+                                    .product-price= "$" + val.price
+                                    .product-desc= val.description
         footer
             // Optional enhancement: wrapped text in <p> tag for semantics
             p © 2025 CreatureCo. All rights reserved.

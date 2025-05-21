@@ -45,7 +45,7 @@ const products = [
         "name": "Macaw Parrot",
         "price": 2000,
         "description": "Vibrantly colored and charismatic with a strong personality. Requires experienced handling and socialization.",
-        "imageUrl": "/images/tempimg.jpg"
+        "imageUrl": "/images/macaw parrot.jpg"
     },
     {
         "name": "Persian Kitten",
