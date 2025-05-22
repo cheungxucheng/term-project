@@ -50,6 +50,7 @@ a {
 }
 
 .search-bar button {
+    border: #333;
     flex: 1;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;

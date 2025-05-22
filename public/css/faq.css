@@ -80,6 +80,7 @@ h1 {
 
 .search-bar button {
     flex: 1;
+    border: #333;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-top-right-radius: 4px;
