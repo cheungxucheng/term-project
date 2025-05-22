@@ -64,4 +64,5 @@ SECRET=your_jwt_secret
 npm start
 ```
 5. Open in your browser
-   Visit http://localhost:some_number to view the website
+
+Visit http://localhost:some_number to view the website
