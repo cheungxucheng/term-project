@@ -48,20 +48,22 @@
                         });
 
                         if (!response.ok) {
-                            throw new Error('Échec de l’inscription');
+                            throw new Error('Error logging in.');
                         }
                         
                         const result = await response.json();
                         if (checkbox) {
                             localStorage.setItem('authToken', result.token);
+                            sessionStorage.removeItem('authToken');
                         }
                         else {
                             sessionStorage.setItem('authToken', result.token);
+                            localStorage.removeItem('authToken');
                         }
                         window.location.href = '/storefront';
         
                     } catch (error) {
-                        alert('Erreur : ' + error.message);
+                        alert('Error : ' + error.message);
                     }
                 });
             </script>

@@ -41,7 +41,7 @@ html
                 .total
                     strong Total: 
                     span#cart-total $0.00
-                button(type="button") Check Out
+                button(id="checkout" type="button") Check Out
 
         footer
             | © 2025 CreatureCo. All rights reserved.
@@ -97,7 +97,7 @@ html
                             item.classList.add("cart-item");
                             item.innerHTML = `
                             <div class="container-img">
-                                <img src="${product.imageUrl || '/images/default.png'}" width="120" height="180" class="img-products" alt="Image of ${product.name}">
+                                <img src="${product.imageUrl || '/images/default.png'}" width="160" height="180" class="img-products" alt="Image of ${product.name}">
                                 <button onclick="popProduct('${product.id}', '${index}')"><img src="/images/trash.png" class="trash-icon" alt="Trash icon"></button>
                             </div>
                             <div class="product-name">${product.name}</div>
@@ -117,7 +117,7 @@ html
                 .catch(err => console.error("Erreur lors de la récupération du panier :", err));
             }
             document.addEventListener("DOMContentLoaded", function () {
-                const token = localStorage.getItem("authToken");
+                const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
                 if (token) {
                     const nav = document.getElementById("auth-link");
                     nav.textContent = "My Profile";
@@ -128,7 +128,7 @@ html
             });
         script.
             function popProduct(product_id, index) {
-                const token = localStorage.getItem("authToken");    
+                const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");    
                 console.log("index: ", index)
                 console.log("product_id: ", product_id)
 
@@ -150,6 +150,29 @@ html
                     .catch(err => console.error("Erreur lors de la récupération du panier :", err));
                 }
             }
+        script. 
+            document.addEventListener("DOMContentLoaded", () => {
+                const button = document.getElementById('checkout');
+                
+                button.addEventListener('click', () => {
+                    const token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");    
+
+                    fetch('/checkout/purchase', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.message || data.error);
+                        loadCart(token);  // Reload cart to reflect it's now empty
+                    })
+                    .catch(err => console.error("Error during purchase :", err));
+                });
+            });
+
         script.
             function openMenu() {
                 const menu = document.getElementById('menu');

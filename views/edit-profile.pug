@@ -1,0 +1,126 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Edit Profile
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/css/profile.css")
+
+  body
+    header
+      .logo
+        a(href="/storefront") CreatureCo
+      form.search-bar(action="/search" method="POST")
+        input(name="keyword" id="userInput" type="text", placeholder="Search products..." required)
+        button(type="submit") 🔎
+      .menu
+        button#button-menu(onclick="openMenu()")
+          img(src="/images/menu.png", alt="menu" width="30" height="30")
+      .menu-open-close.hidden#menu
+        .user-actions-menu
+          a(href="/" id="auth-link") Login/Register
+          a(href="/storefront") Home
+          a(href="/about") About
+          a(href="/contact") Contact
+          .cart-icon 
+            a(href="/checkout") 🛒
+      .user-actions
+        a(href="/" id="auth-link") Login/Register
+        a(href="/storefront") Home
+        a(href="/about") About
+        a(href="/contact") Contact
+        .cart-icon 
+          a(href="/checkout") 🛒
+
+    main.profile-container
+      section.profile-card
+        img.profile-img(src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", alt="Profile Picture")
+        h2(id="name") name
+        p(id="email") email
+        p(id="desc") Member since: Jan 2023
+
+      section.profile-content
+        .profile-section
+          h3 Edit Profile
+          form#editProfileForm
+            .input-item
+                label(for="firstname") First Name:
+                input#firstname(type="text" name="firstname" required)
+            .input-item
+                label(for="lastname") Last Name:
+                input#lastname(type="text" name="lastname" required)
+            .input-item
+                label(for="email") Email:
+                input#useremail(type="email" name="email" required)
+            //- .input-item
+            //-     label(for="desc") Bio:
+            //-     input#useremail(type="text" name="desc" required)
+            
+            .buttons
+                button(type="submit") Save Changes
+                a(href="/profile") Cancel
+
+    footer.site-footer
+      | © 2025 CreatureCo. All rights reserved.
+
+    script(src="/scripts/IsAuth.js")
+    script.
+      document.addEventListener("DOMContentLoaded", function () {
+        let token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+        
+        if (token) {
+            const name = document.getElementById("name");
+            const email = document.getElementById("email");
+            const nav = document.getElementById("auth-link");
+            const user = JSON.parse(atob(token.split(".")[1]));
+
+            nav.textContent = "My Profile";
+            nav.href = "/profile";
+            name.textContent = user.dbres2.firstname + " " + user.dbres2.lastname;
+            email.textContent = user.dbres2.email;
+        }        
+        else {
+            window.location.href = '/'; // Redirect to login if error
+        }
+
+        document.getElementById("editProfileForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const firstname = document.getElementById("firstname").value;
+            const lastname = document.getElementById("lastname").value;
+            const email = document.getElementById("useremail").value;
+            try {
+              const res = await fetch('/edit', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer ' + token
+                  },
+                  body: JSON.stringify({ firstname, lastname, email })
+              });
+
+              if (!res.ok) {
+                  const err = await res.json();
+                  throw new Error(err.message || 'Failed to update');
+              }
+
+              const data = await res.json();
+              alert(data.message || 'Profile updated');
+              if (localStorage.getItem("authToken")) {
+                localStorage.setItem("authToken", data.token);
+              }
+              else {
+                sessionStorage.setItem("authToken", data.token);
+              }
+              window.location.href = '/profile';
+            } catch (err) {
+                console.error('Error editing:', err);
+                alert('There was an error: ' + err.message);
+            }
+        });
+      });
+
+    script.
+      function openMenu() {
+        const menu = document.getElementById('menu');
+        menu.classList.toggle('hidden');
+      }

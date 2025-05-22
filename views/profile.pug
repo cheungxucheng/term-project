@@ -40,22 +40,24 @@ html(lang="en")
                 img.profile-img(src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", alt="Profile Picture")
                 h2(id="name") name
                 p(id="email") email
-                p Member since: Jan 2023
+                p(id="desc") Member since: Jan 2023
 
             section.profile-content
                 .profile-section
                     h3 Recent Orders
                     ul
                         if orders && orders.length
-                            each order in orders
-                                li Order ##{order.id} - $#{order.order_total.toFixed(2)} - #{order.status} - #{new Date(order.created_at).toLocaleDateString()}
+                            each order, index in orders
+                                if index < 5
+                                    li Order ##{order.id} - $#{order.order_total} - #{order.status} - #{new Date(order.created_at).toLocaleDateString()}
                         else
                             li No past orders found.
 
-            .profile-section
-                h3 Account Settings
-                button Edit Profile
-                button Change Password
+                .profile-section
+                    h3 Account Settings
+                    .buttons
+                        a(href="/edit") Edit Profile
+                        a(href="/edit-pass") Change Password
 
         footer.site-footer
             | © 2025 CreatureCo. All rights reserved.

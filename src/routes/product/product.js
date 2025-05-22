@@ -46,8 +46,8 @@ router.post('/addToCart', async (req, res) => {
     db.serialize(() => {
         db.get('SELECT product_ids from carts where user_id = ?', [user_id], (err2, res2) => {
             if (err2) {
-                console.error('Erreur UPDATE :', err3.message);
-                res.status(500).json({ error: 'Erreur get data from cart' });
+                console.error('Error UPDATE :', err3.message);
+                res.status(500).json({ error: 'Error getting data from cart' });
             } else {
                 let new_list;
                 if (res2.product_ids == '') {
@@ -57,10 +57,10 @@ router.post('/addToCart', async (req, res) => {
                 }
                 setProductToCart.run([new_list, user_id], (err3) => {
                     if (err3) {
-                        console.error('Erreur UPDATE :', err3.message);
-                        res.status(500).json({ error: 'Erreur mise à jour panier' });
+                        console.error('Error UPDATE :', err3.message);
+                        res.status(500).json({ error: 'Error adding product to cart.' });
                     } else {
-                        res.status(200).json({ status: 'ok', message: 'Produit ajouté' });
+                        res.status(200).json({ status: 'ok', message: 'Product added.' });
                     }
                 });
             }
