@@ -47,15 +47,16 @@ html(lang="en")
                     h3 Recent Orders
                     ul
                         if orders && orders.length
-                            each order in orders
-                                li Order ##{order.id} - $#{order.order_total} - #{order.status} - #{new Date(order.created_at).toLocaleDateString()}
+                            each order, index in orders
+                                if index < 5
+                                    li Order ##{order.id} - $#{order.order_total} - #{order.status} - #{new Date(order.created_at).toLocaleDateString()}
                         else
                             li No past orders found.
 
-            .profile-section
-                h3 Account Settings
-                button Edit Profile
-                button Change Password
+                .profile-section
+                    h3 Account Settings
+                    button Edit Profile
+                    button Change Password
 
         footer.site-footer
             | © 2025 CreatureCo. All rights reserved.

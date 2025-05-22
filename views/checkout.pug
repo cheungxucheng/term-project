@@ -166,7 +166,7 @@ html
                     })
                     .then(res => res.json())
                     .then(data => {
-                        alert(data.message);
+                        alert(data.message || data.error);
                         loadCart(token);  // Reload cart to reflect it's now empty
                     })
                     .catch(err => console.error("Error during purchase :", err));

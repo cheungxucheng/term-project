@@ -81,11 +81,11 @@ main {
 
 .profile-container {
     display: flex;
-    flex-wrap: wrap;
-    max-width: 1000px;
+    /* flex-wrap: wrap; */
     margin: 40px auto;
     padding: 20px;
     gap: 30px;
+    align-items: stretch;
 }
 
 .profile-card {
@@ -107,11 +107,23 @@ main {
 }
 
 .profile-content {
-    flex: 2;
+    /* flex: 2; */
+    height: 420px;
+
     min-width: 300px;
     display: flex;
     flex-direction: column;
+    /* justify-content: space-evenly; */
     gap: 20px;
+}
+
+.profile-orders {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .profile-section {
@@ -119,6 +131,11 @@ main {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-orders li {
+    white-space: nowrap;      /* Prevent individual item text from wrapping */
+    list-style: none;         /* Optional: remove list markers */
 }
 
 .profile-section h3 {
