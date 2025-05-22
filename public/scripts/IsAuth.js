@@ -8,8 +8,15 @@ function decodeJWT(token) {
 }
 
 document.addEventListener("DOMContentLoaded", function () 
-{
-    const token = localStorage.getItem("authToken");
+{   
+    let token;
+    if (localStorage.getItem("authToken")) {
+        token = localStorage.getItem("authToken");
+    }
+    else if (sessionStorage.getItem("authToken")) {
+        token = sessionStorage.getItem("authToken");
+    }
+    
     console.log("token: ", token);
 
     if (token) 

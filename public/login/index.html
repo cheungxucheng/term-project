@@ -31,7 +31,7 @@
             <script>
                 document.getElementById('loginForm').addEventListener('submit', async function(event) {
                     event.preventDefault(); // Empêche le rechargement de la page
-        
+                    const checkbox = document.getElementById("rememberme").checked;
                     const form = event.target;
                     const data = {
                         email: document.getElementById('email').value,
@@ -52,8 +52,12 @@
                         }
         
                         const result = await response.json();
-                        localStorage.setItem('authToken', result.token);
-        
+                        if (checkbox) {
+                            localStorage.setItem('authToken', result.token);
+                        }
+                        else {
+                            sessionStorage.setItem('authToken', result.token);
+                        }
                         window.location.href = '/storefront';
         
                     } catch (error) {
