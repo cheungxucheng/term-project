@@ -10,6 +10,7 @@ const storefrontRoutes = require('./src/routes/storefront/storefront');
 const productRoutes = require('./src/routes/product/product');
 const checkoutRoutes = require('./src/routes/checkout/checkout');
 const profileRoutes = require('./src/routes/profile/profile');
+const editProfile = require('./src/routes/profile/edit');
 const searchRoutes = require('./src/routes/search/search');
 const faqRoutes = require('./src/routes/faq/faq');
 const aboutRoutes = require('./src/routes/about/about');
@@ -33,6 +34,7 @@ app.use('/profile', profileRoutes);
 app.use('/search', searchRoutes);
 app.use('/faq', faqRoutes);
 app.use('/about', aboutRoutes);
+app.use('/edit', editProfile);
 authRoutes(app); // Setup /login and /registration routes
 
 // Serve static login/registration pages

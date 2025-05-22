@@ -133,6 +133,22 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+#editProfileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.input-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
 .profile-orders li {
     white-space: nowrap;      /* Prevent individual item text from wrapping */
     list-style: none;         /* Optional: remove list markers */
@@ -154,6 +170,21 @@ main {
 
 .profile-section button:hover {
     background-color: #0056b3;
+}
+
+.profile-section a {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.profile-section a:hover {
+    background-color: #999;
 }
 
 .site-footer {

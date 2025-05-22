@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
             return res.redirect('/');
         }
         user = decoded.dbres2;
+        console.log(user);
     } catch (err) {
         console.error('JWT verification error:', err.message);
         return res.redirect('/');
@@ -27,7 +28,6 @@ router.get('/', (req, res) => {
             console.error('Error fetching orders:', err.message);
             return res.status(500).send('Server error');
         }
-        console.log(orders);
         res.render('profile', { user, orders });
     });
 });

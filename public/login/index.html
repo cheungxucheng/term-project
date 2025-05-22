@@ -54,9 +54,11 @@
                         const result = await response.json();
                         if (checkbox) {
                             localStorage.setItem('authToken', result.token);
+                            sessionStorage.removeItem('authToken');
                         }
                         else {
                             sessionStorage.setItem('authToken', result.token);
+                            localStorage.removeItem('authToken');
                         }
                         window.location.href = '/storefront';
         

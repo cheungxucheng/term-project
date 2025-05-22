@@ -40,7 +40,7 @@ html(lang="en")
                 img.profile-img(src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", alt="Profile Picture")
                 h2(id="name") name
                 p(id="email") email
-                p Member since: Jan 2023
+                p(id="desc") Member since: Jan 2023
 
             section.profile-content
                 .profile-section
@@ -55,15 +55,16 @@ html(lang="en")
 
                 .profile-section
                     h3 Account Settings
-                    button Edit Profile
-                    button Change Password
+                    .buttons
+                        a(href="/edit") Edit Profile
+                        a(href="#") Change Password
 
         footer.site-footer
             | © 2025 CreatureCo. All rights reserved.
         script(src="/scripts/IsAuth.js")
         script.
             document.addEventListener("DOMContentLoaded", function () {
-                let token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+                let token = sessionStorage.getItem("authToken");
                 
                 if (token) {
                     const name = document.getElementById("name");
