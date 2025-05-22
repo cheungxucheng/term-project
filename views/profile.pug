@@ -62,13 +62,7 @@ html(lang="en")
         script(src="/scripts/IsAuth.js")
         script.
             document.addEventListener("DOMContentLoaded", function () {
-                let token;
-                if (localStorage.getItem("authToken")) {
-                    token = localStorage.getItem("authToken");
-                }
-                else if (sessionStorage.getItem("authToken")) {
-                    token = sessionStorage.getItem("authToken");
-                }
+                let token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
                 
                 if (token) {
                     const name = document.getElementById("name");

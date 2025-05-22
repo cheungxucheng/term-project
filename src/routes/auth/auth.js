@@ -33,7 +33,7 @@ module.exports = function(app) {
                         } else {
                             db.run(`INSERT INTO carts (user_id, product_ids) VALUES (?, ?)`, [result.id, ""], (err) => {
                                 if (err) {
-                                    console.error(color_red, "POST Error register: Email already exist");
+                                    console.error(color_red, "POST Error register: Email already exist"); // source of error
                                     res.status(500).json({ status: 'ko', result: 'create carts' });
                                 } else {
                                     console.log(color_green, "POST request Success: register");

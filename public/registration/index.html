@@ -54,8 +54,8 @@
                             }
             
                             const result = await response.json();
-                            localStorage.setItem('authToken', result.token);
-            
+                            // localStorage.setItem('authToken', result.token);
+                            // sessionStorage.setItem('authToken', result.token);
                             window.location.href = '/';
             
                         } catch (error) {
