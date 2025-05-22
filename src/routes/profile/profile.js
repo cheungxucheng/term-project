@@ -27,6 +27,7 @@ router.get('/', (req, res) => {
             console.error('Error fetching orders:', err.message);
             return res.status(500).send('Server error');
         }
+        console.log(orders);
         res.render('profile', { user, orders });
     });
 });

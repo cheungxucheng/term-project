@@ -48,7 +48,7 @@ html(lang="en")
                     ul
                         if orders && orders.length
                             each order in orders
-                                li Order ##{order.id} - $#{order.order_total.toFixed(2)} - #{order.status} - #{new Date(order.created_at).toLocaleDateString()}
+                                li Order ##{order.id} - $#{order.order_total} - #{order.status} - #{new Date(order.created_at).toLocaleDateString()}
                         else
                             li No past orders found.
 

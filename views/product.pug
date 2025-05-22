@@ -61,7 +61,7 @@ html
 
                 button.addEventListener('click', () => {
                     const productId = button.getAttribute('data-product-id');
-                    const token = localStorage.getItem('authToken');
+                    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
 
                     if (!token) {
                         alert('Vous devez être connecté pour ajouter au panier.');
