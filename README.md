@@ -56,7 +56,7 @@ npm install
 3. **Create the .env file**:
 Create a .env file in the root directory and add the following environment variables:
 ```env
-PORT=some_number
+PORT=3000
 SECRET=your_jwt_secret
 ```
 4. **Run the development server**
@@ -65,4 +65,4 @@ npm start
 ```
 5. Open in your browser
 
-Visit http://localhost:some_number to view the website
+Visit http://localhost:3000 to view the website
