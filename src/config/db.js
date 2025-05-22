@@ -26,6 +26,16 @@ function initializeDatabase() {
         `);
 
         db.run(`
+            CREATE TABLE IF NOT EXISTS Products (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL UNIQUE,
+                price REAL NOT NULL,
+                description TEXT,
+                imageUrl TEXT
+            )
+        `);
+
+        db.run(`
             CREATE TABLE IF NOT EXISTS Carts (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INT UNIQUE NOT NULL,
