@@ -1,6 +1,6 @@
 # 🛍️ CreatureCo 
 
-**CreatureCo ** is a full-stack e-commerce web application developed as a term project. It enables users to browse products, manage their profiles, and perform secure transactions.
+**CreatureCo** is a full-stack e-commerce web application developed as a term project. It enables users to browse products, manage their profiles, and perform secure transactions.
 
 ---
 
