@@ -36,7 +36,7 @@ module.exports = function(app) {
                                     console.error(color_red, "POST Error register: Email already exist");
                                     res.status(500).json({ status: 'ko', result: 'create carts' });
                                 } else {
-                                    console.log(color_green, "POST requesr Success: register");
+                                    console.log(color_green, "POST request Success: register");
                                     const token = jsw.sign({id: result.id, email: req.body.email, password: req.body.password}, process.env.SECRET)
                                     res.cookie('authcookie', token, { secure: true, maxAge: 36000000 })
                                     res.status(200).json({ status: 'ok', token: token });
