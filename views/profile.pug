@@ -57,14 +57,14 @@ html(lang="en")
                     h3 Account Settings
                     .buttons
                         a(href="/edit") Edit Profile
-                        a(href="#") Change Password
+                        a(href="/edit-pass") Change Password
 
         footer.site-footer
             | © 2025 CreatureCo. All rights reserved.
         script(src="/scripts/IsAuth.js")
         script.
             document.addEventListener("DOMContentLoaded", function () {
-                let token = sessionStorage.getItem("authToken");
+                let token = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
                 
                 if (token) {
                     const name = document.getElementById("name");

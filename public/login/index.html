@@ -48,7 +48,7 @@
                         });
 
                         if (!response.ok) {
-                            throw new Error('Échec de l’inscription');
+                            throw new Error('Error logging in.');
                         }
                         
                         const result = await response.json();
@@ -63,7 +63,7 @@
                         window.location.href = '/storefront';
         
                     } catch (error) {
-                        alert('Erreur : ' + error.message);
+                        alert('Error : ' + error.message);
                     }
                 });
             </script>

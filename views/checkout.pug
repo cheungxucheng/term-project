@@ -97,7 +97,7 @@ html
                             item.classList.add("cart-item");
                             item.innerHTML = `
                             <div class="container-img">
-                                <img src="${product.imageUrl || '/images/default.png'}" width="120" height="180" class="img-products" alt="Image of ${product.name}">
+                                <img src="${product.imageUrl || '/images/default.png'}" width="160" height="180" class="img-products" alt="Image of ${product.name}">
                                 <button onclick="popProduct('${product.id}', '${index}')"><img src="/images/trash.png" class="trash-icon" alt="Trash icon"></button>
                             </div>
                             <div class="product-name">${product.name}</div>

@@ -17,7 +17,6 @@ router.get('/', (req, res) => {
             return res.redirect('/');
         }
         user = decoded.dbres2;
-        console.log(user.id);
     } catch (err) {
         console.error('JWT verification error:', err.message);
         return res.redirect('/');
@@ -37,7 +36,6 @@ router.post('/', (req, res) => {
     const decoded = jwt.verify(token, process.env.SECRET)
     const userId = decoded.dbres2.id;
 
-    console.log(userId);
     db.serialize(() => {
         db.run('UPDATE Users SET firstname = ?, lastname = ?, email = ? WHERE id = ?', [firstname, lastname, email, userId], (err) => {
             if (err) {

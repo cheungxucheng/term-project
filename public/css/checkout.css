@@ -144,7 +144,11 @@ main {
     margin: 10px;
 }
 
-.cart-list {
+#cart-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 40%;
     text-align: right;
     margin-right: 16px;
 }
