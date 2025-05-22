@@ -78,8 +78,7 @@ main {
 .product-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-left: 50px;
+    gap: 20px 60px;
 }
 
 .product-box a {
@@ -93,7 +92,7 @@ main {
     justify-content: space-between;
     align-items: center;
     height: 250px;
-    width: 300px;
+    width: auto;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -103,7 +102,7 @@ main {
 .product img {
     width: 100%;
     max-width: 130px;
-    height: 50%;
+    height: 60%;
 }
 
 

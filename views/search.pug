@@ -32,11 +32,31 @@ html
                 a(href="/contact") Contact
                 .cart-icon 
                     a(href="/checkout") 🛒
+        h2(id="results")= products.length + " results for: " + `"${keyword}"`
         main
-            h2= products.length + " results for: " + keyword
+            .filters
+                legend Filter by Price
+                label
+                    input(type="radio", name="price", value="0-100")
+                    | $0 - $100
+                label
+                    input(type="radio", name="price", value="100-500")
+                    | $100 - $500
+                label
+                    input(type="radio", name="price", value="500-1000")
+                    | $500 - $1000
+                label
+                    input(type="radio", name="price", value="1000-1500")
+                    | $1000 - $1500
+                label
+                    input(type="radio", name="price", value="1500-2000")
+                    | $1500 - $2000
+                label
+                    input(type="radio", name="price", value="all", checked)
+                    | All Prices
             .product-grid
                 each val, key in products
-                    .product-box 
+                    .product-box(data-price=`${val.price}`)
                         a(href=`/product/${val.id}`)
                             .product 
                                 img(src=val.imageUrl alt="Image of Product") 
@@ -51,3 +71,24 @@ html
                 const menu = document.getElementById('menu');
                 menu.classList.toggle('hidden');
             }
+            document.addEventListener('DOMContentLoaded', function () {
+                const radioButtons = document.querySelectorAll('.filters input[type="radio"]');
+                const products = document.querySelectorAll('.product-box');
+                
+                radioButtons.forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        const range = radio.value;
+
+                        products.forEach(product => {
+                            const price = parseFloat(product.dataset.price);
+
+                            if (range === 'all') {
+                                product.style.display = 'block';
+                            } else {
+                                const [min, max] = range.split('-').map(Number);
+                                product.style.display = (price >= min && price <= max) ? 'block' : 'none';
+                            }
+                        });
+                    });
+                });
+            });
